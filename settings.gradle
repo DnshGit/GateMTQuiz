@@ -1,0 +1,2 @@
+rootProject.name='GateMT Quiz'
+include ':app'
