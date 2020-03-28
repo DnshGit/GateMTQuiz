@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ResultsActivity">
+
+    <TextView
+        android:id="@+id/textview_totalscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Score : "
+        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="48dp"
+        android:textSize="48dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/table_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/textview_totalscore">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Question Num"
+            android:textColor="@android:color/black"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Answered"
+            android:textColor="@android:color/black"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/textview_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Score"
+            android:textColor="@android:color/black"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/table_header"
+        android:layout_above="@+id/btn_show_solutions"
+        android:layout_marginBottom="4dp"/>
+
+    <Button
+        android:id="@+id/btn_show_solutions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Solutions"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"/>
+
+</RelativeLayout>
