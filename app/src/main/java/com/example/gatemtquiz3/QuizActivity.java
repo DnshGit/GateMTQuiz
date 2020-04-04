@@ -258,7 +258,7 @@ public class QuizActivity extends AppCompatActivity {
                 timeLeftInMillis = 0;
                 updateCountDownText();
                 checkAnswer();
-                finishQuiz();
+                submitQuiz();
 
             }
         }.start();

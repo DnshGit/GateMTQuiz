@@ -5,7 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorLight"
     tools:context=".SolutionsActivity">
+
+    <TextView
+        android:id="@+id/solutions_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Solutions "
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorLight"
+        android:background="@color/colorPrimaryDark"
+        android:textSize="32dp" />
 
     <ListView
         android:id="@+id/list_solutions"

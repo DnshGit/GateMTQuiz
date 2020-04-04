@@ -1,6 +1,7 @@
 package com.example.gatemtquiz3;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,12 @@ public class ResultListAdapter extends ArrayAdapter<ResultListItem> {
         serialNoTextView.setText(Integer.toString(serialNo));
         answerValueTextView.setText(answeredValue);
         currentScoreTextView.setText(Double.toString(currentScore));
+
+        if (serialNo%2 == 0) {
+            serialNoTextView.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+            answerValueTextView.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+            currentScoreTextView.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+        }
 
         return convertView;
     }

@@ -4,51 +4,132 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorLight"
+    android:translationZ="0dp"
+    android:elevation="0dp"
     tools:context=".ResultsActivity">
 
     <TextView
-        android:id="@+id/textview_totalscore"
-        android:layout_width="wrap_content"
+        android:id="@+id/results_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total Score : "
-        android:textColor="@android:color/black"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="48dp"
-        android:textSize="48dp"
-        android:gravity="center"/>
+        android:text=" Results "
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorLight"
+        android:background="@color/colorPrimaryDark"
+        android:textSize="32dp" />
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/results_header"
+        android:translationZ="1dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="SCORE"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:layout_margin="16dp"
+            android:paddingBottom="16dp"
+            android:textSize="16dp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="ACCURACY"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:layout_margin="16dp"
+            android:paddingBottom="16dp"
+            android:textSize="16dp"
+            android:gravity="center_horizontal"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout2"
+        android:layout_below="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:translationZ="2dp"
+        android:layout_marginTop="-32dp">
+
+        <TextView
+            android:id="@+id/textview_score"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=" 00.0 "
+            android:elevation="10dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@color/colorLight"
+            android:layout_centerHorizontal="true"
+            android:textSize="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/textview_accuracy"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=" 00.0% "
+            android:elevation="10dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@color/colorLight"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            android:textSize="32dp"
+            android:gravity="center"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/table_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/textview_totalscore">
+        android:layout_below="@+id/layout2">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Question Num"
-            android:textColor="@android:color/black"
-            android:background="@android:color/darker_gray"
+            android:text="QUESTION"
+            android:textColor="@color/colorLight"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="16dp"
             android:gravity="center"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Answered"
-            android:textColor="@android:color/black"
-            android:background="@android:color/darker_gray"
+            android:text="STATUS"
+            android:textColor="@color/colorLight"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="16dp"
             android:gravity="center"/>
         <TextView
             android:id="@+id/textview_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Score"
-            android:textColor="@android:color/black"
-            android:background="@android:color/darker_gray"
+            android:text="SCORE"
+            android:textColor="@color/colorLight"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="16dp"
             android:gravity="center"/>
     </LinearLayout>
 

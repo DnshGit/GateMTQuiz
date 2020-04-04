@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class ResultsActivity extends AppCompatActivity {
 
     private TextView textViewTotalScore;
+    private TextView textViewAccuracy;
     private double score=0.0;
     private long backPressedTime;
     private Button btnShowSolutions;
@@ -29,7 +30,8 @@ public class ResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        textViewTotalScore = findViewById(R.id.textview_totalscore);
+        textViewTotalScore = findViewById(R.id.textview_score);
+        textViewAccuracy = findViewById(R.id.textview_accuracy);
         resultsListView = findViewById(R.id.list_results);
         btnShowSolutions = findViewById(R.id.btn_show_solutions);
 
@@ -56,7 +58,8 @@ public class ResultsActivity extends AppCompatActivity {
             accuracy = (totalCorrect/totalAnswered)*100;
         }
 
-        textViewTotalScore.setText("Score : " + score + "/" + accuracy + "%" + totalCorrect + totalAnswered);
+        textViewTotalScore.setText(String.format("%.2f",score));
+        textViewAccuracy.setText(String.format("%.2f",accuracy));
 
         ResultListAdapter adapter = new ResultListAdapter(this, R.layout.list_item, resultList);
         resultsListView.setAdapter(adapter);
