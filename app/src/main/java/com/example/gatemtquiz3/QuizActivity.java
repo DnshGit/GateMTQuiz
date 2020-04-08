@@ -134,8 +134,7 @@ public class QuizActivity extends AppCompatActivity {
             score = savedInstanceState.getDouble(KEY_SCORE);
             timeLeftInMillis = savedInstanceState.getLong(KEY_MILLIS_LEFT);
             questionImage = savedInstanceState.getString(KEY_IMAGE_NAME);
-            imageView.setImageResource(getResources().getIdentifier("drawable/question_images" + questionImage,
-                    null, getPackageName()));
+            imageView.setImageResource(getResources().getIdentifier(questionImage,"drawable", getPackageName()));
 
             updateCountDownText();
             startCountDown();
@@ -158,6 +157,7 @@ public class QuizActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 checkAnswer();
+                                questionCounter++;
                                 submitQuiz();
                             }
                         })
@@ -216,7 +216,7 @@ public class QuizActivity extends AppCompatActivity {
             if(answer.equals(currentQuestion.getAnswer())) {
                 saveResultAs(CORRECT_ANSWER, 1.0);
             }else {
-                saveResultAs(WRONG_ANSWER, -0.33);
+                saveResultAs(WRONG_ANSWER, -0.333);
             }
         }else {
             saveResultAs(NOT_ANSWERED, 0.0);
@@ -229,17 +229,19 @@ public class QuizActivity extends AppCompatActivity {
             resultList.remove(questionCounter);
             solutionsList.remove(questionCounter);
         }
-        ResultListItem result = new ResultListItem(currentQuestion.getId(), answeredAs, currentScore);
+        ResultListItem result = new ResultListItem(questionCounter, answeredAs, currentScore);
         resultList.add(questionCounter, result);
         solutionImage = currentQuestion.getSolutionImage();
-        SolutionListItem solution = new SolutionListItem(currentQuestion.getId(), solutionImage);
+        SolutionListItem solution = new SolutionListItem(questionCounter, solutionImage);
         solutionsList.add(questionCounter, solution);
     }
 
     private void submitQuiz() {
         while (questionCounter+1 <= questionCountTotal) {
-            currentQuestion = questionList.get(questionCounter);
-            saveResultAs(NOT_ANSWERED, 0.0);
+            if (!answered[questionCounter]) {
+                currentQuestion = questionList.get(questionCounter);
+                saveResultAs(NOT_ANSWERED, 0.0);
+            }
             questionCounter++;
         }
         finishQuiz();
@@ -279,7 +281,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void toastCenter(String sample){
-        Toast toast = Toast.makeText(QuizActivity.this, sample, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(QuizActivity.this, sample, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }

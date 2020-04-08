@@ -8,16 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -34,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerDifficulty;
     private Spinner spinnerCategory;
     private Button btnStartQuiz;
-    private int highScore;
     private AlertDialog.Builder alertBuilder;
 
     @Override
@@ -48,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
         loadCategories();
         loadDifficultyLevels();
-        loadHighscore();
 
         btnStartQuiz = findViewById(R.id.btn_start_quiz);
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startQuiz() {
-        buttonEffect(btnStartQuiz);
         Categories selectedCategory = (Categories) spinnerCategory.getSelectedItem();
         int categoryID = selectedCategory.getId();
         String categoryName = selectedCategory.getName();
@@ -73,45 +67,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_CATEGORY_ID, categoryID);
         intent.putExtra(EXTRA_CATEGORY_NAME, categoryName);
         intent.putExtra(EXTRA_DIFFICULTY, difficulty);
-        startActivityForResult(intent, REQUEST_CODE_QUIZ);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == REQUEST_CODE_QUIZ) {
-            if(resultCode == RESULT_OK) {
-                int score = data.getIntExtra(QuizActivity.EXTRA_SCORE, 0);
-                if(score > highScore) {
-                    updateScore(score);
-                }
-            }
-        }
-    }
-
-    public void buttonEffect(View button){
-        button.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-                Toast.makeText(MainActivity.this, "button touched", Toast.LENGTH_SHORT).show();
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        v.setScaleX(2);
-                        v.setScaleY(2);
-                        Toast.makeText(MainActivity.this, "scale increased", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        v.setScaleX(1);
-                        v.setScaleY(1);
-                        Toast.makeText(MainActivity.this, "scale decreased", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
+        startActivity(intent);
     }
 
     private void loadCategories() {
@@ -132,20 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, difficultyLevels);
         adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDifficulty.setAdapter(adapterDifficulty);
-    }
-
-    private void loadHighscore() {
-        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        highScore = prefs.getInt(KEY_HIGHSCORE,0);
-    }
-
-    private void updateScore(int highScoreNew) {
-        highScore = highScoreNew;
-
-        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(KEY_HIGHSCORE, highScore);
-        editor.apply();
     }
 
     @Override

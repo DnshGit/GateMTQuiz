@@ -65,8 +65,10 @@
 
     <ScrollView
         android:id="@+id/scrollView"
+        style="@style/scrollbar_shape_style"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingRight="4dp"
         android:layout_below="@+id/layout_header"
         android:layout_above="@+id/radio_group_layout">
 
@@ -74,13 +76,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="16dp">
+            android:background="@drawable/border_dark">
 
             <TextView
                 android:id="@+id/textview_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:freezesText="true"
                 android:gravity="center_horizontal"
                 android:text="Here the question will be displayed. here the question will be displayed agaim"
@@ -92,8 +93,7 @@
                 android:id="@+id/image_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
+                android:layout_marginRight="4dp"
                 android:scaleType="fitXY"/>
         </LinearLayout>
     </ScrollView>

@@ -41,9 +41,9 @@ public class ResultListAdapter extends ArrayAdapter<ResultListItem> {
         TextView answerValueTextView = (TextView) convertView.findViewById(R.id.textview_answers);
         TextView currentScoreTextView = (TextView) convertView.findViewById(R.id.textview_scores);
 
-        serialNoTextView.setText(Integer.toString(serialNo));
+        serialNoTextView.setText(Integer.toString(serialNo + 1));
         answerValueTextView.setText(answeredValue);
-        currentScoreTextView.setText(Double.toString(currentScore));
+        currentScoreTextView.setText(String.format("%.2f",currentScore));
 
         if (serialNo%2 == 0) {
             serialNoTextView.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));

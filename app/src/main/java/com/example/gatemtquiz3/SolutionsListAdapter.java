@@ -36,7 +36,7 @@ public class SolutionsListAdapter extends ArrayAdapter<SolutionListItem> {
         TextView serialNoTextView = (TextView) convertView.findViewById(R.id.textView_solutionNo);
         ImageView solutionImageView = (ImageView) convertView.findViewById(R.id.imageview_solution);
 
-        serialNoTextView.setText("SOLUTION : " + serialNo);
+        serialNoTextView.setText("SOLUTION : " + (serialNo+1));
         solutionImageView.setImageResource(mContext.getResources().getIdentifier(solutionImageName, "drawable", mContext.getPackageName()));
 
         return convertView;

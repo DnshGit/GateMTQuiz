@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".SolutionsActivity"></activity>
+        <activity android:name=".SolutionsActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".ResultsActivity" />
         <activity android:name=".QuizActivity"
             android:screenOrientation="landscape"

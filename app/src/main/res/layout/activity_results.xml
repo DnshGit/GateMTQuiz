@@ -135,6 +135,8 @@
 
     <ListView
         android:id="@+id/list_results"
+        style="@style/scrollbar_shape_style"
+        android:paddingRight="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/table_header"
