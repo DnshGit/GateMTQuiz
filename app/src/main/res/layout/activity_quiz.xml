@@ -9,194 +9,269 @@
     android:layout_margin="0dp">
 
     <LinearLayout
-        android:id="@+id/layout_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark">
-
-        <TextView
-            android:id="@+id/textview_question_num"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:freezesText="true"
-            android:text="Question"
-            android:gravity="left"
-            android:textStyle="bold"
-            android:textColor="@color/colorLight" />
-
-        <TextView
-            android:id="@+id/textview_category"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:freezesText="true"
-            android:text="Category"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorLight" />
-
-        <TextView
-            android:id="@+id/textview_difficulty"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:freezesText="true"
-            android:text="Difficulty"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/colorLight" />
-
-        <TextView
-            android:id="@+id/textview_clock"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:freezesText="true"
-            android:text="00:30"
-            android:textSize="24dp"
-            android:gravity="center"
-            android:background="@color/colorLight"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/scrollView"
-        style="@style/scrollbar_shape_style"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingRight="4dp"
-        android:layout_below="@+id/layout_header"
-        android:layout_above="@+id/radio_group_layout">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/border_dark">
-
-            <TextView
-                android:id="@+id/textview_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:freezesText="true"
-                android:gravity="center_horizontal"
-                android:text="Here the question will be displayed. here the question will be displayed agaim"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="20dp" />
-
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
-                android:scaleType="fitXY"/>
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/radio_group_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="0dp"
-        android:layout_above="@+id/bottom_buttons">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="Bookmarks"
-            android:textColor="@color/colorPrimaryDark"
-            android:background="@drawable/rbgroup_border"
-            android:layout_marginBottom="0dp"/>
+        android:id="@+id/questions_grid_layout"
+        android:layout_width="600dp"
+        android:layout_height="350dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:elevation="10dp">
 
         <RadioGroup
-            android:id="@+id/radio_group"
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center_vertical"
             android:background="@drawable/rbgroup_border">
 
             <RadioButton
-                android:id="@+id/radio_btn1"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:freezesText="true"
-                android:text="A"
+                android:text="Answered"
                 android:textColor="@android:color/black"
-                android:buttonTint="@color/colorPrimaryDark" />
+                android:buttonTint="@android:color/holo_green_dark"
+                android:checked="true"
+                android:layout_marginLeft="10dp"/>
 
             <RadioButton
-                android:id="@+id/radio_btn2"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:freezesText="true"
-                android:text="B"
+                android:text="Marked for Review"
                 android:textColor="@android:color/black"
-                android:buttonTint="@color/colorPrimaryDark" />
+                android:buttonTint="@android:color/holo_blue_dark"
+                android:checked="true"
+                android:layout_marginLeft="10dp"/>
 
             <RadioButton
-                android:id="@+id/radio_btn3"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:freezesText="true"
-                android:text="C"
+                android:text="Not Attempted"
                 android:textColor="@android:color/black"
-                android:buttonTint="@color/colorPrimaryDark" />
+                android:buttonTint="@android:color/holo_red_dark"
+                android:checked="true"
+                android:layout_marginLeft="10dp"/>
 
-            <RadioButton
-                android:id="@+id/radio_btn4"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <Button
+                android:id="@+id/button_close_grid"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:freezesText="true"
-                android:text="D"
-                android:textColor="@android:color/black"
-                android:buttonTint="@color/colorPrimaryDark" />
+                android:text="Close X"
+                android:padding="0dp"
+                android:textColor="@color/colorLight"
+                android:layout_marginLeft="120dp"/>
         </RadioGroup>
+
+        <GridView
+            android:id="@+id/questions_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="6"
+            android:background="@drawable/rbgroup_border"
+            android:paddingRight="4dp"
+            style="@style/scrollbar_shape_style"/>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/bottom_buttons"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="0dp"
-        android:layout_alignParentBottom="true">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:translationZ="0dp">
 
-        <Button
-            android:id="@+id/btn_prev"
+        <LinearLayout
+            android:id="@+id/layout_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:freezesText="true"
-            android:layout_weight="1"
-            android:text="Previous" />
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimaryDark">
 
-        <Button
-            android:id="@+id/btn_submit"
+            <TextView
+                android:id="@+id/textview_question_num"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                android:text="Question"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:textColor="@color/colorLight" />
+
+            <TextView
+                android:id="@+id/textview_category"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                android:text="Category"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@color/colorLight" />
+
+            <TextView
+                android:id="@+id/textview_difficulty"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                android:text="Difficulty"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorLight" />
+
+            <TextView
+                android:id="@+id/textview_clock"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                android:text="00:30"
+                android:textSize="24dp"
+                android:gravity="center"
+                android:background="@color/colorLight"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            style="@style/scrollbar_shape_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="4dp"
+            android:layout_below="@+id/layout_header"
+            android:layout_above="@+id/radio_group_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/border_dark">
+
+                <TextView
+                    android:id="@+id/textview_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:gravity="center_horizontal"
+                    android:text="Here the question will be displayed. here the question will be displayed agaim"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/radio_group_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:freezesText="true"
-            android:layout_weight="1"
-            android:text="Submit" />
+            android:orientation="horizontal"
+            android:padding="0dp"
+            android:layout_above="@+id/bottom_buttons">
 
-        <Button
-            android:id="@+id/btn_next"
+            <Button
+                android:id="@+id/button_questions_grid"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="GoTo Question"
+                android:textColor="@color/colorLight"
+                android:layout_marginBottom="0dp"/>
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/rbgroup_border">
+
+                <RadioButton
+                    android:id="@+id/radio_btn1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:text="A"
+                    android:textColor="@android:color/black"
+                    android:buttonTint="@color/colorPrimaryDark" />
+
+                <RadioButton
+                    android:id="@+id/radio_btn2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:text="B"
+                    android:textColor="@android:color/black"
+                    android:buttonTint="@color/colorPrimaryDark" />
+
+                <RadioButton
+                    android:id="@+id/radio_btn3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:text="C"
+                    android:textColor="@android:color/black"
+                    android:buttonTint="@color/colorPrimaryDark" />
+
+                <RadioButton
+                    android:id="@+id/radio_btn4"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:freezesText="true"
+                    android:text="D"
+                    android:textColor="@android:color/black"
+                    android:buttonTint="@color/colorPrimaryDark" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:freezesText="true"
-            android:layout_weight="1"
-            android:text="Save &amp; Next" />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:layout_marginBottom="0dp"
+            android:padding="0dp"
+            android:layout_alignParentBottom="true">
 
+            <Button
+                android:id="@+id/btn_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                android:layout_weight="1"
+                android:text="Mark for Review" />
+
+            <Button
+                android:id="@+id/btn_end_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                android:layout_weight="1"
+                android:text="End Quiz" />
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                android:layout_weight="1"
+                android:text="Save &amp; Next" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

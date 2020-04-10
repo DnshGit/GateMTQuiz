@@ -57,7 +57,7 @@ public class ResultsActivity extends AppCompatActivity {
         }
 
         textViewTotalScore.setText(String.format("%.2f",score));
-        textViewAccuracy.setText(String.format("%.2f",accuracy));
+        textViewAccuracy.setText(String.format("%.1f",accuracy) + "%");
 
         ResultListAdapter adapter = new ResultListAdapter(this, R.layout.list_item, resultList);
         resultsListView.setAdapter(adapter);
@@ -69,7 +69,10 @@ public class ResultsActivity extends AppCompatActivity {
                 Bundle solutionBundle = new Bundle();
                 solutionBundle.putParcelableArrayList(QuizActivity.EXTRA_SOLUTION_LIST, solutionsList);
                 solutionsIntent.putExtras(solutionBundle);
-                startActivity(solutionsIntent);
+        //        startActivity(solutionsIntent);
+
+                Intent solutionsPdfIntent = new Intent(ResultsActivity.this, SolutionsActivity2.class);
+                startActivity(solutionsPdfIntent);
             }
         });
 
@@ -77,14 +80,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(backPressedTime + 2000 > System.currentTimeMillis()) {
-            Intent backIntent = new Intent(ResultsActivity.this, MainActivity.class);
-            startActivity(backIntent);
-            finish();
-        }else {
-            Toast.makeText(this, "Press back again", Toast.LENGTH_SHORT).show();
-        }
-
-        backPressedTime = System.currentTimeMillis();
+        MainActivity mainActivity = new MainActivity();
+        mainActivity.showAppCloseAlert(ResultsActivity.this);
     }
 }

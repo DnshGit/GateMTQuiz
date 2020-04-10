@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_QUIZ = 1;
+    public static String solutionPdfName;
     public static final String EXTRA_DIFFICULTY = "extraDifficulty";
     public static final String EXTRA_CATEGORY_ID = "extraCategoryId";
     public static final String EXTRA_CATEGORY_NAME = "extraCategoryName";
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerDifficulty;
     private Spinner spinnerCategory;
     private Button btnStartQuiz;
-    private AlertDialog.Builder alertBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         spinnerDifficulty = findViewById(R.id.spinner_difficulty);
         spinnerCategory = findViewById(R.id.spinner_category);
-        alertBuilder = new AlertDialog.Builder(this);
 
         loadCategories();
         loadDifficultyLevels();
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         int categoryID = selectedCategory.getId();
         String categoryName = selectedCategory.getName();
         String difficulty = spinnerDifficulty.getSelectedItem().toString();
+        solutionPdfName = categoryName+" "+difficulty+".pdf";
 
         Intent intent = new Intent(MainActivity.this,QuizActivity.class);
         intent.putExtra(EXTRA_CATEGORY_ID, categoryID);
@@ -90,12 +90,13 @@ public class MainActivity extends AppCompatActivity {
         spinnerDifficulty.setAdapter(adapterDifficulty);
     }
 
-    @Override
-    public void onBackPressed() {
-        alertBuilder.setMessage("Do you want to close this application ?")
+    public void showAppCloseAlert(Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setMessage("Do you want to Close this Application ?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        System.exit(0);
                         moveTaskToBack(true);
                     }
                 })
@@ -110,5 +111,10 @@ public class MainActivity extends AppCompatActivity {
         //Setting the title manually
         alert.setTitle("Alert!");
         alert.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAppCloseAlert(this);
     }
 }

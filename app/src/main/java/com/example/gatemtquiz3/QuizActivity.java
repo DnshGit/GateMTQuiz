@@ -61,7 +61,7 @@ public class QuizActivity extends AppCompatActivity {
     private RadioButton rb3;
     private RadioButton rb4;
     private Button btnReview;
-    private Button btnSubmit;
+    private Button btnEndQuiz;
     private Button btnNext;
     private Button btnQuestionsGrid;
 
@@ -86,8 +86,6 @@ public class QuizActivity extends AppCompatActivity {
     private int[] answeredList;
     private boolean[] answered;
     private long backPressedTime;
-
-    private AlertDialog.Builder alertBuilder;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -115,14 +113,12 @@ public class QuizActivity extends AppCompatActivity {
 
         btnQuestionsGrid = findViewById(R.id.button_questions_grid);
         btnReview = findViewById(R.id.btn_review);
-        btnSubmit = findViewById(R.id.btn_submit);
+        btnEndQuiz = findViewById(R.id.btn_end_quiz);
         btnNext = findViewById(R.id.btn_next);
 
         btnCloseGrid = findViewById(R.id.button_close_grid);
         questionsGridView = findViewById(R.id.questions_gridview);
         questionsGridLayout = findViewById(R.id.questions_grid_layout);
-
-        alertBuilder = new AlertDialog.Builder(this);
 
         Intent intent = getIntent();
         int categoryID = intent.getIntExtra(MainActivity.EXTRA_CATEGORY_ID, 0);
@@ -156,7 +152,7 @@ public class QuizActivity extends AppCompatActivity {
                 answerStatusColorList.add(i,answerStatus);
                 ResultListItem result = new ResultListItem(i, NOT_ANSWERED, 0.0);
                 resultList.add(i, result);
-                SolutionListItem solution = new SolutionListItem(i, "none");
+                SolutionListItem solution = new SolutionListItem(i, questionList.get(i).getSolutionImage());
                 solutionsList.add(i, solution);
             }
             questionsGridLayout.setVisibility(View.GONE);
@@ -202,27 +198,10 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        btnEndQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertBuilder.setMessage("Do you want to Submit?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                finishQuiz();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //  Action for 'NO' Button
-                                dialog.cancel();
-                            }
-                        });
-                //Creating dialog box
-                AlertDialog alert = alertBuilder.create();
-                //Setting the title manually
-                alert.setTitle("Alert!");
-                alert.show();
+                showEndQuizAlert();
             }
         });
 
@@ -340,6 +319,28 @@ public class QuizActivity extends AppCompatActivity {
         toast.show();
     }
 
+    private void showEndQuizAlert() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setMessage("Do you want to End Quiz?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finishQuiz();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+                    }
+                });
+        //Creating dialog box
+        AlertDialog alert = alertBuilder.create();
+        //Setting the title manually
+        alert.setTitle("Alert!");
+        alert.show();
+    }
+
     private void finishQuiz() {
         checkAnswer();
         countDownTimer.cancel();
@@ -351,18 +352,12 @@ public class QuizActivity extends AppCompatActivity {
         resultIntent.putExtras(resultBundle);
         setResult(RESULT_OK, resultIntent);
         startActivity(resultIntent);
+        finish();
     }
 
     @Override
     public void onBackPressed() {
-        if(backPressedTime + 2000 > System.currentTimeMillis()) {
-            Intent backIntent = new Intent(QuizActivity.this, MainActivity.class);
-            startActivity(backIntent);
-        }else {
-            toastCenter("Press back again");
-        }
-
-        backPressedTime = System.currentTimeMillis();
+        showEndQuizAlert();
     }
 
     @Override
