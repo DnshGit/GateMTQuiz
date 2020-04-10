@@ -40,7 +40,7 @@ public class ResultsActivity extends AppCompatActivity {
         solutionsList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_SOLUTION_LIST);
 
         int i, totalAnswered=0, totalCorrect=0;
-        double accuracy;
+        double accuracy=0.0;
         for (i=0;i<resultList.size();i++) {
             double currScore = resultList.get(i).getCurrentScore();
             score+= currScore;
@@ -48,14 +48,12 @@ public class ResultsActivity extends AppCompatActivity {
             if (currScore!= 0.0) {
                 totalAnswered++;
             }
-            if (currScore > 0.0) {
+            if (currScore == 1.0) {
                 totalCorrect++;
             }
         }
-        if (totalAnswered==0) {
-            accuracy = 0;
-        }else {
-            accuracy = (totalCorrect/totalAnswered)*100;
+        if (totalAnswered!=0) {
+            accuracy = ((double) totalCorrect/(double) totalAnswered)*100;
         }
 
         textViewTotalScore.setText(String.format("%.2f",score));
