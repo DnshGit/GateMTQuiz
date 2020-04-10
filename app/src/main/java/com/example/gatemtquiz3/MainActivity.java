@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_DIFFICULTY = "extraDifficulty";
     public static final String EXTRA_CATEGORY_ID = "extraCategoryId";
     public static final String EXTRA_CATEGORY_NAME = "extraCategoryName";
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String KEY_HIGHSCORE = "keyHighscore";
 
     private Spinner spinnerDifficulty;
     private Spinner spinnerCategory;
@@ -68,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_CATEGORY_NAME, categoryName);
         intent.putExtra(EXTRA_DIFFICULTY, difficulty);
         startActivity(intent);
+        finish();
     }
 
     private void loadCategories() {

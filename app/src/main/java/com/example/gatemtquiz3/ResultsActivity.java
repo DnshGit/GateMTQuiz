@@ -19,10 +19,10 @@ public class ResultsActivity extends AppCompatActivity {
     private TextView textViewTotalScore;
     private TextView textViewAccuracy;
     private double score=0.0;
-    private long backPressedTime;
     private Button btnShowSolutions;
 
     private ListView resultsListView;
+    ArrayList<ResultListItem> resultList;
     private ArrayList<SolutionListItem> solutionsList;
 
     @Override
@@ -35,7 +35,6 @@ public class ResultsActivity extends AppCompatActivity {
         resultsListView = findViewById(R.id.list_results);
         btnShowSolutions = findViewById(R.id.btn_show_solutions);
 
-        ArrayList<ResultListItem> resultList;
         resultList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_RESULT_LIST);
         solutionsList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_SOLUTION_LIST);
 

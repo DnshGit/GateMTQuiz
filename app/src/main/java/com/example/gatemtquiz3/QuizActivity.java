@@ -34,13 +34,15 @@ import java.util.Collections;
 import java.util.Locale;
 
 public class QuizActivity extends AppCompatActivity {
-    public static final String EXTRA_SCORE = "extraScore";
     private static final long COUNTDOWN_IN_MILLIS = 2700000;
-    private static final String KEY_SCORE = "keyScore";
     private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
     private static final String KEY_MILLIS_LEFT = "keyMillisLeft";
     private static final String KEY_QUESTION_LIST = "keyQuestionList";
     public static final String KEY_IMAGE_NAME = "keyImageName";
+    public static final String KEY_RESULT_LIST = "keyResultList";
+    public static final String KEY_ANSWER_COLOR_LIST = "keyAnswerColorList";
+    public static final String KEY_ANSWERED_LIST_ARRAY = "keyAnsweredListArray";
+    public static final String KEY_ANSWERED_ARRAY = "keyAnsweredArray";
     public static final String EXTRA_RESULT_LIST = "extraResultList";
     public static final String EXTRA_SOLUTION_LIST = "extraSolutionList";
     public static final String NOT_ANSWERED = "Not Attempted";
@@ -85,7 +87,6 @@ public class QuizActivity extends AppCompatActivity {
     private RadioButton rbSelected;
     private int[] answeredList;
     private boolean[] answered;
-    private long backPressedTime;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -129,7 +130,6 @@ public class QuizActivity extends AppCompatActivity {
         textViewDifficulty.setText(difficulty);
 
         if(savedInstanceState == null) {
-
             DatabaseAccess dbHelper = DatabaseAccess.getInstance(this);
             dbHelper.open();
             questionList = dbHelper.getQuestions(categoryID, difficulty);
@@ -160,14 +160,18 @@ public class QuizActivity extends AppCompatActivity {
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
             startCountDown();
         }else {
+            questionsGridLayout.setVisibility(View.GONE);
             questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
             questionCountTotal = questionList.size();
             questionCounter = savedInstanceState.getInt(KEY_QUESTION_COUNT) +1;
             currentQuestion = questionList.get(questionCounter);
-            score = savedInstanceState.getDouble(KEY_SCORE);
             timeLeftInMillis = savedInstanceState.getLong(KEY_MILLIS_LEFT);
             questionImage = savedInstanceState.getString(KEY_IMAGE_NAME);
             imageView.setImageResource(getResources().getIdentifier(questionImage,"drawable", getPackageName()));
+            resultList = savedInstanceState.getParcelableArrayList(KEY_RESULT_LIST);
+            answerStatusColorList = savedInstanceState.getParcelableArrayList(KEY_ANSWER_COLOR_LIST);
+            answeredList = savedInstanceState.getIntArray(KEY_ANSWERED_LIST_ARRAY);
+            answered = savedInstanceState.getBooleanArray(KEY_ANSWERED_ARRAY);
             updateCountDownText();
             startCountDown();
         }
@@ -271,9 +275,6 @@ public class QuizActivity extends AppCompatActivity {
     private void saveResultAs(String answeredAs, Double currentScore) {
         ResultListItem result = new ResultListItem(questionCounter, answeredAs, currentScore);
         resultList.set(questionCounter, result);
-        solutionImage = currentQuestion.getSolutionImage();
-        SolutionListItem solution = new SolutionListItem(questionCounter, solutionImage);
-        solutionsList.set(questionCounter, solution);
     }
 
     private void updateQuestionGrid(int bgColor) {
@@ -345,7 +346,6 @@ public class QuizActivity extends AppCompatActivity {
         checkAnswer();
         countDownTimer.cancel();
         Intent resultIntent = new Intent(QuizActivity.this, ResultsActivity.class);
-        resultIntent.putExtra(EXTRA_SCORE,score);
         Bundle resultBundle = new Bundle();
         resultBundle.putParcelableArrayList(EXTRA_RESULT_LIST, resultList);
         resultBundle.putParcelableArrayList(EXTRA_SOLUTION_LIST, solutionsList);
@@ -371,10 +371,13 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putDouble(KEY_SCORE, score);
         outState.putInt(KEY_QUESTION_COUNT, questionCounter);
         outState.putLong(KEY_MILLIS_LEFT, timeLeftInMillis);
         outState.putParcelableArrayList(KEY_QUESTION_LIST, questionList);
-        outState.putString(KEY_IMAGE_NAME,questionImage);
+        outState.putString(KEY_IMAGE_NAME, questionImage);
+        outState.putParcelableArrayList(KEY_RESULT_LIST, resultList);
+        outState.putParcelableArrayList(KEY_ANSWER_COLOR_LIST, answerStatusColorList);
+        outState.putIntArray(KEY_ANSWERED_LIST_ARRAY, answeredList);
+        outState.putBooleanArray(KEY_ANSWERED_ARRAY, answered);
     }
 }
