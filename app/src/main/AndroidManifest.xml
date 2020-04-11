@@ -4,14 +4,15 @@
     package="com.example.gatemtquiz3">
 
     <application
+        android:name=".AdMobApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="GateMT Quiz 0.3"
-        tools:replace="android:label"
+        android:label="GateMT Quiz 0.4"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".SolutionsActivity2"></activity>
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        tools:replace="android:label">
+        <activity android:name=".SolutionsActivity2" />
         <activity
             android:name=".SolutionsActivity"
             android:screenOrientation="landscape"

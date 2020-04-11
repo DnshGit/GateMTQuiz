@@ -8,9 +8,16 @@ import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 import java.util.ArrayList;
 
@@ -19,25 +26,39 @@ public class ResultsActivity extends AppCompatActivity {
     private TextView textViewTotalScore;
     private TextView textViewAccuracy;
     private double score=0.0;
+    private boolean isVideoAdLoaded=false;
     private Button btnShowSolutions;
+    private LinearLayout gifLayout;
 
     private ListView resultsListView;
     ArrayList<ResultListItem> resultList;
     private ArrayList<SolutionListItem> solutionsList;
+
+    private RewardedVideoAd mRewardedVideoAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        showVideoAd();
+
+        gifLayout = findViewById(R.id.gif_layout);
         textViewTotalScore = findViewById(R.id.textview_score);
         textViewAccuracy = findViewById(R.id.textview_accuracy);
         resultsListView = findViewById(R.id.list_results);
         btnShowSolutions = findViewById(R.id.btn_show_solutions);
 
+        gifLayout.setVisibility(View.VISIBLE);
+        btnShowSolutions.setEnabled(false);
+
         resultList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_RESULT_LIST);
         solutionsList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_SOLUTION_LIST);
+    }
 
+    private void showResults() {
+        gifLayout.setVisibility(View.GONE);
         int i, totalAnswered=0, totalCorrect=0;
         double accuracy=0.0;
         for (i=0;i<resultList.size();i++) {
@@ -61,6 +82,7 @@ public class ResultsActivity extends AppCompatActivity {
         ResultListAdapter adapter = new ResultListAdapter(this, R.layout.list_item, resultList);
         resultsListView.setAdapter(adapter);
 
+        btnShowSolutions.setEnabled(true);
         btnShowSolutions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,13 +90,93 @@ public class ResultsActivity extends AppCompatActivity {
                 Bundle solutionBundle = new Bundle();
                 solutionBundle.putParcelableArrayList(QuizActivity.EXTRA_SOLUTION_LIST, solutionsList);
                 solutionsIntent.putExtras(solutionBundle);
-        //        startActivity(solutionsIntent);
+                //        startActivity(solutionsIntent);
 
                 Intent solutionsPdfIntent = new Intent(ResultsActivity.this, SolutionsActivity2.class);
                 startActivity(solutionsPdfIntent);
             }
         });
+    }
 
+    private void showVideoAd() {
+        mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+
+            @Override
+            public void onRewarded(RewardItem rewardItem) {
+                Toast.makeText(ResultsActivity.this, "onRewarded! currency: " + rewardItem.getType() + "  amount: " +
+                        rewardItem.getAmount(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdLeftApplication() {
+                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdLeftApplication",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdClosed() {
+                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int errorCode) {
+                showResults();
+                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdFailedToLoad " + errorCode, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdLoaded() {
+                showResults();
+                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdOpened() {
+                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoStarted() {
+                Toast.makeText(ResultsActivity.this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        loadRewardedVideoAd();
+    }
+
+    private void loadRewardedVideoAd() {
+        // Real AdUnitId mRewardedVideoAd.loadAd(getString(R.string.rewarded_video)
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917"
+                , new AdRequest.Builder()
+                        .build());
+
+        // showing the ad to user
+        showRewardedVideo();
+    }
+
+    private void showRewardedVideo() {
+        // make sure the ad is loaded completely before showing it
+        if (mRewardedVideoAd.isLoaded()) {
+            mRewardedVideoAd.show();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        mRewardedVideoAd.resume(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mRewardedVideoAd.pause(this);
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mRewardedVideoAd.destroy(this);
+        super.onDestroy();
     }
 
     @Override

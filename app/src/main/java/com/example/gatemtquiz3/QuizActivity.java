@@ -240,15 +240,20 @@ public class QuizActivity extends AppCompatActivity {
         }else {
             rbGroup.clearCheck();
         }
+        if(questionCounter<questionCountTotal) {
+            btnReview.setEnabled(true);
+            btnNext.setEnabled(true);
+            textViewQuestionNum.setText("Question : " + (questionCounter+1) + "/" + questionCountTotal);
 
-        textViewQuestionNum.setText("Question : " + (questionCounter+1) + "/" + questionCountTotal);
-
-        currentQuestion = questionList.get(questionCounter);
-        textViewQuestion.setText(currentQuestion.getQuestion());
-        questionImage = currentQuestion.getQuestionImage();
-        imageView.setImageResource(getResources().getIdentifier(questionImage,"drawable", getPackageName()));
-
-        if(questionCounter == questionCountTotal-1) {
+            currentQuestion = questionList.get(questionCounter);
+            textViewQuestion.setText(currentQuestion.getQuestion());
+            questionImage = currentQuestion.getQuestionImage();
+            imageView.setImageResource(getResources().getIdentifier(questionImage,"drawable", getPackageName()));
+        }else {
+            toastCenter("This is Last Question. Click End Quiz to get Result");
+            btnReview.setEnabled(false);
+        }
+        if (questionCounter==questionCountTotal-1){
             btnNext.setEnabled(false);
         }
     }

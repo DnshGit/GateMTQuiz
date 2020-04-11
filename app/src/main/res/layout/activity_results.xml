@@ -9,6 +9,20 @@
     android:elevation="0dp"
     tools:context=".ResultsActivity">
 
+    <LinearLayout
+        android:id="@+id/gif_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/loading" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/results_header"
         android:layout_width="match_parent"
