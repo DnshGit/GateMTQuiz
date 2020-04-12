@@ -157,27 +157,15 @@
                 android:textColor="@color/colorLight" />
 
             <TextView
-                android:id="@+id/textview_category"
+                android:id="@+id/textview_section"
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:freezesText="true"
-                android:text="Category"
+                android:text="Section Name"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
                 android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@color/colorLight" />
-
-            <TextView
-                android:id="@+id/textview_difficulty"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:freezesText="true"
-                android:text="Set Num"
-                android:gravity="center"
-                android:layout_gravity="center_vertical"
                 android:textStyle="bold"
                 android:textColor="@color/colorLight" />
 

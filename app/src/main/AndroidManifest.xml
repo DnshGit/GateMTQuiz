@@ -13,10 +13,6 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:label">
         <activity android:name=".SolutionsActivity2" />
-        <activity
-            android:name=".SolutionsActivity"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".ResultsActivity" />
         <activity
             android:name=".QuizActivity"

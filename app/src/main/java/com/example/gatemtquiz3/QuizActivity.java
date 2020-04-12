@@ -48,18 +48,15 @@ public class QuizActivity extends AppCompatActivity {
     public static final String KEY_ANSWERED_LIST_ARRAY = "keyAnsweredListArray";
     public static final String KEY_ANSWERED_ARRAY = "keyAnsweredArray";
     public static final String EXTRA_RESULT_LIST = "extraResultList";
-    public static final String EXTRA_SOLUTION_LIST = "extraSolutionList";
     public static final String NOT_ANSWERED = "Not Attempted";
     public static final String CORRECT_ANSWER = "Correct";
     public static final String WRONG_ANSWER = "Incorrect";
     // UI Components declaration
     private TextView textViewQuestionNum;
-    private TextView textViewDifficulty;
-    private TextView textViewCategory;
+    private TextView textViewSection;
     private TextView textViewClock;
     private ImageView imageView;
     private String questionImage;
-    private String solutionImage;
     private RadioGroup rbGroup;
     private RadioButton rb1;
     private RadioButton rb2;
@@ -89,7 +86,6 @@ public class QuizActivity extends AppCompatActivity {
     private boolean[] answered;
     private ArrayList<Question> questionList;
     private ArrayList<ResultListItem> resultList;
-    private ArrayList<SolutionListItem> solutionsList;
     private ArrayList<QuestionGridItem> answerStatusColorList;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -98,8 +94,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         //Initialisation
-        textViewDifficulty = findViewById(R.id.textview_difficulty);
-        textViewCategory = findViewById(R.id.textview_category);
+        textViewSection = findViewById(R.id.textview_section);
         textViewClock = findViewById(R.id.textview_clock);
         textViewQuestionNum = findViewById(R.id.textview_question_num);
         imageView = findViewById(R.id.image_view);
@@ -119,12 +114,10 @@ public class QuizActivity extends AppCompatActivity {
         btnCloseInstructions = findViewById(R.id.close_instructions_button);
         //Getting Values from MainActivity
         Intent intent = getIntent();
-        int categoryID = intent.getIntExtra(MainActivity.EXTRA_CATEGORY_ID, 0);
-        String categoryName = intent.getStringExtra(MainActivity.EXTRA_CATEGORY_NAME);
-        String difficulty = intent.getStringExtra(MainActivity.EXTRA_DIFFICULTY);
+        String sectionName = intent.getStringExtra(MainActivity.EXTRA_SECTION_NAME);
+        String subSection = intent.getStringExtra(MainActivity.EXTRA_SUB_SECTION);
         //Setting Category and Set(Difficulty)
-        textViewCategory.setText(categoryName);
-        textViewDifficulty.setText(difficulty);
+        textViewSection.setText(sectionName + " ( " + subSection + " )");
         //Setting Radio Button text
         rb1.setText("A");
         rb2.setText("B");
@@ -135,12 +128,11 @@ public class QuizActivity extends AppCompatActivity {
             // Getting questions from Database
             DatabaseAccess dbHelper = DatabaseAccess.getInstance(this);
             dbHelper.open();
-            questionList = dbHelper.getQuestions(categoryID, difficulty);
+            questionList = dbHelper.getQuestions(sectionName, subSection);
             dbHelper.close();
             //Initialising Arrays and Lists
             questionCountTotal = questionList.size();
             resultList = new ArrayList<ResultListItem>(questionCountTotal+1);
-            solutionsList = new ArrayList<SolutionListItem>(questionCountTotal+1);
             answerStatusColorList = new ArrayList<QuestionGridItem>(questionCountTotal+1);
             answeredList = new int[questionCountTotal+1];
             answered = new boolean[questionCountTotal+1];
@@ -154,8 +146,6 @@ public class QuizActivity extends AppCompatActivity {
                 answerStatusColorList.add(i,answerStatus);
                 ResultListItem result = new ResultListItem(i, NOT_ANSWERED, 0.0);
                 resultList.add(i, result);
-                SolutionListItem solution = new SolutionListItem(i, questionList.get(i).getSolutionImage());
-                solutionsList.add(i, solution);
             }
             questionsGridLayout.setVisibility(View.GONE);
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
@@ -168,6 +158,7 @@ public class QuizActivity extends AppCompatActivity {
             });
         }else {
 /*---------------------------------Activity Restarts From Saved state-----------------------------*/
+            instructionsLayout.setVisibility(View.GONE);
             questionsGridLayout.setVisibility(View.GONE);
             questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
             questionCountTotal = questionList.size();
@@ -276,10 +267,12 @@ public class QuizActivity extends AppCompatActivity {
             rbSelected = findViewById(answeredList[questionCounter]);
             answer = rbSelected.getText().toString();
             updateQuestionGrid(R.drawable.bg_green);
+            Double correctMarks = Double.valueOf(currentQuestion.getMarks());
+            Double negativeMarks = -(correctMarks/3);
             if(answer.equals(currentQuestion.getAnswer())) {
-                saveResultAs(CORRECT_ANSWER, 1.0);
+                saveResultAs(CORRECT_ANSWER, correctMarks);
             }else {
-                saveResultAs(WRONG_ANSWER, -0.333);
+                saveResultAs(WRONG_ANSWER, negativeMarks);
             }
         }else {
             saveResultAs(NOT_ANSWERED, 0.0);
@@ -365,7 +358,6 @@ public class QuizActivity extends AppCompatActivity {
         Intent resultIntent = new Intent(QuizActivity.this, ResultsActivity.class);
         Bundle resultBundle = new Bundle();
         resultBundle.putParcelableArrayList(EXTRA_RESULT_LIST, resultList);
-        resultBundle.putParcelableArrayList(EXTRA_SOLUTION_LIST, solutionsList);
         resultIntent.putExtras(resultBundle);
         setResult(RESULT_OK, resultIntent);
 

@@ -28,13 +28,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 /*------------------------------Variables Declaration---------------------------------------------*/
     public static String solutionPdfName;
+    public static String sectionName;
     //Constant key Values
-    public static final String EXTRA_DIFFICULTY = "extraDifficulty";
-    public static final String EXTRA_CATEGORY_ID = "extraCategoryId";
-    public static final String EXTRA_CATEGORY_NAME = "extraCategoryName";
+    public static final String EXTRA_SECTION_NAME = "extraSectionName";
+    public static final String EXTRA_SUB_SECTION = "extraSubSection";
     //UI components declaration
-    private Spinner spinnerDifficulty;
-    private Spinner spinnerCategory;
+    private String subSectionName;
+    private Spinner spinnerSubsections;
+    private Spinner spinnerSections;
     private Button btnStartQuiz;
     //AdView declaration
     private AdView mAdView;
@@ -44,14 +45,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Initialising Variables
-        spinnerCategory = findViewById(R.id.spinner_category);
-        spinnerDifficulty = findViewById(R.id.spinner_difficulty);
+        spinnerSections = findViewById(R.id.spinner_section);
+        spinnerSubsections = findViewById(R.id.spinner_sub_section);
         mAdView = findViewById(R.id.adViewBanner);
         btnStartQuiz = findViewById(R.id.btn_start_quiz);
 
-        loadCategories();
-        loadDifficultyLevels();
         showBannerAd();
+
+        loadSections();
+        sectionName = spinnerSections.getSelectedItem().toString();
+        loadSubSections();
+        subSectionName = spinnerSubsections.getSelectedItem().toString();
 
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -65,44 +69,42 @@ public class MainActivity extends AppCompatActivity {
     }
 /*---------------------------------Method for Start Quiz------------------------------------------*/
     private void startQuiz() {
-        Categories selectedCategory = (Categories) spinnerCategory.getSelectedItem();
-        int categoryID = selectedCategory.getId();
-        String categoryName = selectedCategory.getName();
-        String difficulty = spinnerDifficulty.getSelectedItem().toString();
         //To Generate saved PDF name
-        solutionPdfName = categoryName+" "+difficulty+".pdf";
+        solutionPdfName = sectionName+" "+subSectionName+".pdf";
 
         Intent intent = new Intent(MainActivity.this,QuizActivity.class);
         //Passing variables to Next Activity
-        intent.putExtra(EXTRA_CATEGORY_ID, categoryID);
-        intent.putExtra(EXTRA_CATEGORY_NAME, categoryName);
-        intent.putExtra(EXTRA_DIFFICULTY, difficulty);
+        intent.putExtra(EXTRA_SECTION_NAME, sectionName);
+        intent.putExtra(EXTRA_SUB_SECTION, subSectionName);
         startActivity(intent);
         //To finish this Activity after Starting Next Activity
         finish();
     }
 /*-------------------------------Method for Category Selector-------------------------------------*/
-    private void loadCategories() {
-        //Getting Categories from Database
+    private void loadSections() {
+        //Getting Sections from Database
         DatabaseAccess dbHelper = DatabaseAccess.getInstance(this);
         dbHelper.open();
-        List<Categories> categories = dbHelper.getAllCategories();
+        List<String> sections = dbHelper.getAllSections();
         dbHelper.close();
         //Loading categories into Spinner using Array Adapter(Category class)
-        ArrayAdapter<Categories> adapterCategories = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, categories);
-        adapterCategories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapterCategories);
+        ArrayAdapter<String> adapterSections = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, sections);
+        adapterSections.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSections.setAdapter(adapterSections);
     }
 /*--------------------------Method for Sets(Difficulty) Selector----------------------------------*/
-    private void loadDifficultyLevels() {
-        //Getting Sets(Difficulty) from Question class
-        String[] difficultyLevels = Question.getAllDifficultyLevels();
+    private void loadSubSections() {
+        //Getting SubSections from Question class
+        DatabaseAccess dbHelper = DatabaseAccess.getInstance(this);
+        dbHelper.open();
+        List<String> subSections = dbHelper.getAllSubSections();
+        dbHelper.close();
         //Loading Sets(Difficulty) into Spinner using Array Adapter(String)
-        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, difficultyLevels);
-        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDifficulty.setAdapter(adapterDifficulty);
+        ArrayAdapter<String> adapterSubSections = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, subSections);
+        adapterSubSections.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSubsections.setAdapter(adapterSubSections);
     }
 /*-----------------------------Method for Closing App Alert---------------------------------------*/
     public void showAppCloseAlert(Context context) {

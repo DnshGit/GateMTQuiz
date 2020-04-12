@@ -58,47 +58,64 @@ public class DatabaseAccess {
      *
      * @return a List of quotes
      */
-    public List<Categories> getAllCategories() {
-        List<Categories> categoriesList = new ArrayList<>();
-        Cursor c = database.rawQuery("SELECT * FROM " + CategoriesTable.TABLE_NAME, null);
+    public List<String> getAllSections() {
+        List<String> sectionsList = new ArrayList<>();
+        Cursor c = database.rawQuery("SELECT DISTINCT " + QuestionsTable.COLUMN_SECTION +
+                " FROM " + QuestionsTable.TABLE_NAME +
+                " ORDER BY " + QuestionsTable.COLUMN_SECTION, null);
 
         if(c.moveToFirst()) {
             do{
-                Categories categories = new Categories();
-                categories.setId(c.getInt(c.getColumnIndex(CategoriesTable._ID)));
-                categories.setName(c.getString(c.getColumnIndex(CategoriesTable.COLUMN_NAME)));
-                categoriesList.add(categories);
+                String sectionName = c.getString(c.getColumnIndex(QuestionsTable.COLUMN_SECTION));
+                sectionsList.add(sectionName);
             }while (c.moveToNext());
         }
 
         c.close();
-        return categoriesList;
+        return sectionsList;
     }
 
-    public ArrayList<Question> getQuestions(int categoryID, String difficulty) {
+    public List<String> getAllSubSections() {
+        List<String> subSectionsList = new ArrayList<>();
+        Cursor c = database.rawQuery("SELECT DISTINCT " + QuestionsTable.COLUMN_SUB_SECTION +
+                " FROM " + QuestionsTable.TABLE_NAME +
+                " WHERE " + QuestionsTable.COLUMN_SECTION +
+                " = \"" + MainActivity.sectionName + "\"" +
+                " ORDER BY " + QuestionsTable.COLUMN_SUB_SECTION, null);
+
+        if(c.moveToFirst()) {
+            do{
+                String subSectionName = c.getString(c.getColumnIndex(QuestionsTable.COLUMN_SUB_SECTION));
+                subSectionsList.add(subSectionName);
+            }while (c.moveToNext());
+        }
+
+        c.close();
+        return subSectionsList;
+    }
+
+    public ArrayList<Question> getQuestions(String sectionName, String subSection) {
 
         ArrayList<Question> questionList = new ArrayList<>();
 
-        String selection = QuestionsTable.COLUMN_CATEGORY_ID + " = ? " +
-                " AND " + QuestionsTable.COLUMN_DIFFICULTY + " = ? ";
-        String[] selectionArgs = new String[]{String.valueOf(categoryID), difficulty};
-        Cursor c = database.query(QuestionsTable.TABLE_NAME, null, selection,
-                selectionArgs, null, null, null);
+        Cursor c = database.rawQuery("SELECT * FROM " + QuestionsTable.TABLE_NAME +
+                " WHERE " + QuestionsTable.COLUMN_SECTION +
+                " = \"" + sectionName + "\"" +
+                " AND " + QuestionsTable.COLUMN_SUB_SECTION +
+                " = \"" + subSection + "\"", null);
 
         if(c.moveToFirst()) {
             do {
                 Question question = new Question();
                 question.setId(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ID)));
-                question.setQuestion(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_QUESTION)));
                 question.setQuestionImage(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_QUESTION_IMAGE)));
                 question.setAnswer(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_ANSWER)));
-                question.setSolutionImage(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_SOLUTION_IMAGE)));
-                question.setDifficulty(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_DIFFICULTY)));
-                question.setCategoryId(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_CATEGORY_ID)));
+                question.setMarks(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_MARKS)));
                 questionList.add(question);
 
             }while (c.moveToNext());
         }
+
         c.close();
         return questionList;
 

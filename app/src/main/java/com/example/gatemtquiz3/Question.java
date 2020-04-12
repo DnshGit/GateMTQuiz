@@ -4,48 +4,33 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Question implements Parcelable {
-    public static final String DIFFICULTY1 = "Set 1";
-    public static final String DIFFICULTY2 = "Set 2";
-    public static final String DIFFICULTY3 = "Set 3";
 
     private int id;
-    private String question;
     private String questionImage;
     private String answer;
-    private String solutionImage;
-    private String difficulty;
-    private int categoryId;
+    private int marks;
 
     public Question() {}
 
-    public Question(String question,String questionImage, String answer, String solutionImage, String difficulty, int categoryId) {
-        this.question = question;
+    public Question(String questionImage, String answer, int marks) {
         this.questionImage = questionImage;
         this.answer = answer;
-        this.solutionImage = solutionImage;
-        this.difficulty = difficulty;
-        this.categoryId = categoryId;
+        this.marks = marks;
     }
 
     protected Question(Parcel in) {
         id = in.readInt();
-        question = in.readString();
         questionImage = in.readString();
         answer = in.readString();
-        solutionImage = in.readString();
-        difficulty = in.readString();
-        categoryId = in.readInt();
+        marks = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(question);
         dest.writeString(questionImage);
         dest.writeString(answer);
-        dest.writeString(solutionImage);
-        dest.writeString(difficulty);
-        dest.writeInt(categoryId);
+        dest.writeInt(marks);
     }
 
     @Override
@@ -73,14 +58,6 @@ public class Question implements Parcelable {
         this.id = id;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
     public String getQuestionImage() {
         return questionImage;
     }
@@ -97,33 +74,12 @@ public class Question implements Parcelable {
         this.answer = answer;
     }
 
-    public String getSolutionImage() {
-        return solutionImage;
+    public int getMarks() {
+        return marks;
     }
 
-    public void setSolutionImage(String solutionImage) {
-        this.solutionImage = solutionImage;
+    public void setMarks(int marks) {
+        this.marks = marks;
     }
 
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public static String[] getAllDifficultyLevels() {
-        return new String[] {
-                DIFFICULTY1, DIFFICULTY2, DIFFICULTY3
-        };
-    }
 }

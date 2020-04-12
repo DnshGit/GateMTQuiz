@@ -30,7 +30,6 @@ public class ResultsActivity extends AppCompatActivity {
 
     private ListView resultsListView;
     ArrayList<ResultListItem> resultList;
-    private ArrayList<SolutionListItem> solutionsList;
 
     private RewardedVideoAd mRewardedVideoAd;
 
@@ -53,7 +52,6 @@ public class ResultsActivity extends AppCompatActivity {
         btnShowSolutions.setEnabled(false);
 
         resultList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_RESULT_LIST);
-        solutionsList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_SOLUTION_LIST);
 
         showVideoAd();
     }
@@ -87,14 +85,8 @@ public class ResultsActivity extends AppCompatActivity {
         btnShowSolutions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent solutionsIntent = new Intent(ResultsActivity.this, SolutionsActivity.class);
-                Bundle solutionBundle = new Bundle();
-                solutionBundle.putParcelableArrayList(QuizActivity.EXTRA_SOLUTION_LIST, solutionsList);
-                solutionsIntent.putExtras(solutionBundle);
-                //        startActivity(solutionsIntent);
 
-                Intent solutionsPdfIntent = new Intent(ResultsActivity.this, SolutionsActivity2.class);
-                startActivity(solutionsPdfIntent);
+                startActivity(new Intent(ResultsActivity.this, SolutionsActivity2.class));
             }
         });
     }

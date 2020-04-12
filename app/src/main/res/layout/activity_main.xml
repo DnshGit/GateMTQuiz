@@ -44,7 +44,7 @@
         android:background="@drawable/border_dark">
 
         <Spinner
-            android:id="@+id/spinner_category"
+            android:id="@+id/spinner_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -62,7 +62,7 @@
         android:background="@drawable/border_dark">
 
         <Spinner
-            android:id="@+id/spinner_difficulty"
+            android:id="@+id/spinner_sub_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
