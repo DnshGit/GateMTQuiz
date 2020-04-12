@@ -25,8 +25,6 @@ public class ResultsActivity extends AppCompatActivity {
 
     private TextView textViewTotalScore;
     private TextView textViewAccuracy;
-    private double score=0.0;
-    private boolean isVideoAdLoaded=false;
     private Button btnShowSolutions;
     private LinearLayout gifLayout;
 
@@ -36,13 +34,14 @@ public class ResultsActivity extends AppCompatActivity {
 
     private RewardedVideoAd mRewardedVideoAd;
 
+    private double score=0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        showVideoAd();
 
         gifLayout = findViewById(R.id.gif_layout);
         textViewTotalScore = findViewById(R.id.textview_score);
@@ -55,6 +54,8 @@ public class ResultsActivity extends AppCompatActivity {
 
         resultList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_RESULT_LIST);
         solutionsList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_SOLUTION_LIST);
+
+        showVideoAd();
     }
 
     private void showResults() {
@@ -99,66 +100,45 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     private void showVideoAd() {
+        // Real AdUnitId mRewardedVideoAd.loadAd(getString(R.string.rewarded_video)
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder()
+                            .build());
+        // make sure the ad is loaded completely before showing it
+        if (mRewardedVideoAd.isLoaded()) {
+            mRewardedVideoAd.show();
+        }
+        // setting listener on Ad
         mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
-
             @Override
             public void onRewarded(RewardItem rewardItem) {
                 Toast.makeText(ResultsActivity.this, "onRewarded! currency: " + rewardItem.getType() + "  amount: " +
                         rewardItem.getAmount(), Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onRewardedVideoAdLeftApplication() {
                 Toast.makeText(ResultsActivity.this, "onRewardedVideoAdLeftApplication",
                         Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onRewardedVideoAdClosed() {
-                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onRewardedVideoAdFailedToLoad(int errorCode) {
                 showResults();
-                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdFailedToLoad " + errorCode, Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onRewardedVideoAdLoaded() {
                 showResults();
-                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ResultsActivity.this, "Please Watch Video To Continue", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onRewardedVideoAdOpened() {
-                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
-            }
 
+            }
             @Override
             public void onRewardedVideoStarted() {
-                Toast.makeText(ResultsActivity.this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
             }
         });
-
-        loadRewardedVideoAd();
-    }
-
-    private void loadRewardedVideoAd() {
-        // Real AdUnitId mRewardedVideoAd.loadAd(getString(R.string.rewarded_video)
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917"
-                , new AdRequest.Builder()
-                        .build());
-
-        // showing the ad to user
-        showRewardedVideo();
-    }
-
-    private void showRewardedVideo() {
-        // make sure the ad is loaded completely before showing it
-        if (mRewardedVideoAd.isLoaded()) {
-            mRewardedVideoAd.show();
-        }
     }
 
     @Override

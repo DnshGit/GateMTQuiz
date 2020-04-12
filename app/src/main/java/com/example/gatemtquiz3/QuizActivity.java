@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,10 @@ import java.util.Collections;
 import java.util.Locale;
 
 public class QuizActivity extends AppCompatActivity {
-    private static final long COUNTDOWN_IN_MILLIS = 2700000;
+/*------------------------------Variables Declaration---------------------------------------------*/
+    // Test time Constant in MilliSeconds
+    private static final long COUNTDOWN_IN_MILLIS = (45*60*1000);
+    // Constant KeyValues
     private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
     private static final String KEY_MILLIS_LEFT = "keyMillisLeft";
     private static final String KEY_QUESTION_LIST = "keyQuestionList";
@@ -48,8 +52,7 @@ public class QuizActivity extends AppCompatActivity {
     public static final String NOT_ANSWERED = "Not Attempted";
     public static final String CORRECT_ANSWER = "Correct";
     public static final String WRONG_ANSWER = "Incorrect";
-
-    private TextView textViewQuestion;
+    // UI Components declaration
     private TextView textViewQuestionNum;
     private TextView textViewDifficulty;
     private TextView textViewCategory;
@@ -66,87 +69,86 @@ public class QuizActivity extends AppCompatActivity {
     private Button btnEndQuiz;
     private Button btnNext;
     private Button btnQuestionsGrid;
-
+    // Questions grid UI components
     private Button btnCloseGrid;
     private GridView questionsGridView;
     private LinearLayout questionsGridLayout;
-
+    private RelativeLayout instructionsLayout;
+    private Button btnCloseInstructions;
+    // Timer declaration
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
-
+    // Other Variables
+    private int questionCounter;
+    private int questionCountTotal;
+    private Question currentQuestion;
+    private String answer;
+    private RadioButton rbSelected;
+    // Arrays and Lists declaration
+    private int[] answeredList;
+    private boolean[] answered;
     private ArrayList<Question> questionList;
     private ArrayList<ResultListItem> resultList;
     private ArrayList<SolutionListItem> solutionsList;
     private ArrayList<QuestionGridItem> answerStatusColorList;
-
-    private int questionCounter;
-    private int questionCountTotal;
-    private Question currentQuestion;
-    private double score;
-    private String answer;
-    private RadioButton rbSelected;
-    private int[] answeredList;
-    private boolean[] answered;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
-        textViewQuestion = findViewById(R.id.textview_question);
-        textViewQuestionNum = findViewById(R.id.textview_question_num);
+        //Initialisation
         textViewDifficulty = findViewById(R.id.textview_difficulty);
         textViewCategory = findViewById(R.id.textview_category);
         textViewClock = findViewById(R.id.textview_clock);
-
+        textViewQuestionNum = findViewById(R.id.textview_question_num);
         imageView = findViewById(R.id.image_view);
-
         rbGroup = findViewById(R.id.radio_group);
         rb1 = findViewById(R.id.radio_btn1);
         rb2 = findViewById(R.id.radio_btn2);
         rb3 = findViewById(R.id.radio_btn3);
         rb4 = findViewById(R.id.radio_btn4);
-        rb1.setText("A");
-        rb2.setText("B");
-        rb3.setText("C");
-        rb4.setText("D");
-
         btnQuestionsGrid = findViewById(R.id.button_questions_grid);
         btnReview = findViewById(R.id.btn_review);
         btnEndQuiz = findViewById(R.id.btn_end_quiz);
         btnNext = findViewById(R.id.btn_next);
-
         btnCloseGrid = findViewById(R.id.button_close_grid);
         questionsGridView = findViewById(R.id.questions_gridview);
         questionsGridLayout = findViewById(R.id.questions_grid_layout);
-
+        instructionsLayout = findViewById(R.id.instructions_layout);
+        btnCloseInstructions = findViewById(R.id.close_instructions_button);
+        //Getting Values from MainActivity
         Intent intent = getIntent();
         int categoryID = intent.getIntExtra(MainActivity.EXTRA_CATEGORY_ID, 0);
         String categoryName = intent.getStringExtra(MainActivity.EXTRA_CATEGORY_NAME);
         String difficulty = intent.getStringExtra(MainActivity.EXTRA_DIFFICULTY);
-
+        //Setting Category and Set(Difficulty)
         textViewCategory.setText(categoryName);
         textViewDifficulty.setText(difficulty);
-
+        //Setting Radio Button text
+        rb1.setText("A");
+        rb2.setText("B");
+        rb3.setText("C");
+        rb4.setText("D");
+/*------------------------------------Activity Starts First time----------------------------------*/
         if(savedInstanceState == null) {
+            // Getting questions from Database
             DatabaseAccess dbHelper = DatabaseAccess.getInstance(this);
             dbHelper.open();
             questionList = dbHelper.getQuestions(categoryID, difficulty);
             dbHelper.close();
-
+            //Initialising Arrays and Lists
             questionCountTotal = questionList.size();
             resultList = new ArrayList<ResultListItem>(questionCountTotal+1);
             solutionsList = new ArrayList<SolutionListItem>(questionCountTotal+1);
             answerStatusColorList = new ArrayList<QuestionGridItem>(questionCountTotal+1);
             answeredList = new int[questionCountTotal+1];
             answered = new boolean[questionCountTotal+1];
-
         //    Collections.shuffle(questionList);
-
+            // Loading First question
             questionCounter=0;
             showQuestion();
-
+            // Saving Defaults States
             for (int i=questionCounter; i<questionCountTotal; i++) {
                 QuestionGridItem answerStatus = new QuestionGridItem(R.drawable.rbgroup_border);
                 answerStatusColorList.add(i,answerStatus);
@@ -156,10 +158,16 @@ public class QuizActivity extends AppCompatActivity {
                 solutionsList.add(i, solution);
             }
             questionsGridLayout.setVisibility(View.GONE);
-
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
-            startCountDown();
+            btnCloseInstructions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    instructionsLayout.setVisibility(View.GONE);
+                    startCountDown();
+                }
+            });
         }else {
+/*---------------------------------Activity Restarts From Saved state-----------------------------*/
             questionsGridLayout.setVisibility(View.GONE);
             questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
             questionCountTotal = questionList.size();
@@ -210,12 +218,12 @@ public class QuizActivity extends AppCompatActivity {
         });
 
     }
-
+/*-------------------------------Method to View Questions grid------------------------------------*/
     private void viewQuestionsGrid() {
+        // Loading grid using Custom Array Adapter
         QuestionsGridAdapter adapter = new QuestionsGridAdapter(this, R.layout.questions_grid_item, answerStatusColorList);
         questionsGridView.setAdapter(adapter);
-        questionsGridLayout.setVisibility(View.VISIBLE);
-
+        // Setting listener for grid items
         questionsGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -231,35 +239,38 @@ public class QuizActivity extends AppCompatActivity {
                 questionsGridLayout.setVisibility(View.GONE);
             }
         });
+
+        questionsGridLayout.setVisibility(View.VISIBLE);
     }
-
+/*-----------------------------------Method to Show Question--------------------------------------*/
     private void showQuestion() {
-
+        // Setting radio button from saved state
         if(answered[questionCounter]) {
             rbGroup.check(answeredList[questionCounter]);
         }else {
             rbGroup.clearCheck();
         }
+        // Loading question
         if(questionCounter<questionCountTotal) {
             btnReview.setEnabled(true);
             btnNext.setEnabled(true);
             textViewQuestionNum.setText("Question : " + (questionCounter+1) + "/" + questionCountTotal);
 
             currentQuestion = questionList.get(questionCounter);
-            textViewQuestion.setText(currentQuestion.getQuestion());
             questionImage = currentQuestion.getQuestionImage();
             imageView.setImageResource(getResources().getIdentifier(questionImage,"drawable", getPackageName()));
         }else {
             toastCenter("This is Last Question. Click End Quiz to get Result");
+            // Disabling review button after last question
             btnReview.setEnabled(false);
         }
+        // Disabling Next button for last question
         if (questionCounter==questionCountTotal-1){
             btnNext.setEnabled(false);
         }
     }
-
+/*---------------------------------Method for Checking and Saving Answer--------------------------*/
     private void checkAnswer() {
-
         if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked() || rb4.isChecked()) {
             answeredList[questionCounter] = rbGroup.getCheckedRadioButtonId();
             rbSelected = findViewById(answeredList[questionCounter]);
@@ -276,7 +287,7 @@ public class QuizActivity extends AppCompatActivity {
         }
         answered[questionCounter] = true;
     }
-
+/*-----------------------------------------Other sub methods======================================*/
     private void saveResultAs(String answeredAs, Double currentScore) {
         ResultListItem result = new ResultListItem(questionCounter, answeredAs, currentScore);
         resultList.set(questionCounter, result);
@@ -287,6 +298,12 @@ public class QuizActivity extends AppCompatActivity {
         answerStatusColorList.set(questionCounter,answerStatus);
     }
 
+    private void toastCenter(String sample){
+        Toast toast = Toast.makeText(QuizActivity.this, sample, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+/*----------------------------------Methods for managing Timer------------------------------------*/
     private void startCountDown() {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -318,13 +335,7 @@ public class QuizActivity extends AppCompatActivity {
             textViewClock.setTextColor(Color.BLACK);
         }
     }
-
-    private void toastCenter(String sample){
-        Toast toast = Toast.makeText(QuizActivity.this, sample, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
-
+/*---------------------------------Method to Show End Quiz Alert----------------------------------*/
     private void showEndQuizAlert() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setMessage("Do you want to End Quiz?")
@@ -346,25 +357,27 @@ public class QuizActivity extends AppCompatActivity {
         alert.setTitle("Alert!");
         alert.show();
     }
-
+/*------------------------------------Method to Finish Quiz Activity------------------------------*/
     private void finishQuiz() {
         checkAnswer();
         countDownTimer.cancel();
+        // Passing Array Lists to Results Activity
         Intent resultIntent = new Intent(QuizActivity.this, ResultsActivity.class);
         Bundle resultBundle = new Bundle();
         resultBundle.putParcelableArrayList(EXTRA_RESULT_LIST, resultList);
         resultBundle.putParcelableArrayList(EXTRA_SOLUTION_LIST, solutionsList);
         resultIntent.putExtras(resultBundle);
         setResult(RESULT_OK, resultIntent);
+
         startActivity(resultIntent);
         finish();
     }
-
+/*------------------------------Method for Back Press Button--------------------------------------*/
     @Override
     public void onBackPressed() {
-        showEndQuizAlert();
+        toastCenter("Back Button is Disabled");
     }
-
+/*-------------------------Methods for Activity Life Cycle Management-----------------------------*/
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -372,7 +385,7 @@ public class QuizActivity extends AppCompatActivity {
             countDownTimer.cancel();
         }
     }
-
+/*--------------------------------Method for Saving Activity State--------------------------------*/
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -386,3 +399,4 @@ public class QuizActivity extends AppCompatActivity {
         outState.putBooleanArray(KEY_ANSWERED_ARRAY, answered);
     }
 }
+/*--------------------------------------End of Quiz Activity Code---------------------------------*/

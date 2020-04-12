@@ -54,28 +54,6 @@ public class SolutionsActivity2 extends AppCompatActivity implements OnPageChang
                 .load();
     }
 
-    private void showInterScreenAd() {
-        //Real AdUnitId mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        // Load ads into Interstitial Ads
-        mInterstitialAd.loadAd(adRequest);
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            public void onAdLoaded() {
-                showInterstitial();
-            }
-        });
-    }
-
-    private void showInterstitial() {
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }
-    }
-
     @Override
     public void loadComplete(int nbPages) {
         PdfDocument.Meta meta = pdfView.getDocumentMeta();
@@ -97,6 +75,21 @@ public class SolutionsActivity2 extends AppCompatActivity implements OnPageChang
                 printBookmarksTree(b.getChildren(), sep + "-");
             }
         }
+    }
+
+    private void showInterScreenAd() {
+        //Real AdUnitId mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        // setting listener for Ad
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+            }
+        });
     }
 
     @Override

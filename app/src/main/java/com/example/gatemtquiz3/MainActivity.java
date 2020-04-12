@@ -28,31 +28,31 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 /*------------------------------Variables Declaration---------------------------------------------*/
     public static String solutionPdfName;
+    //Constant key Values
     public static final String EXTRA_DIFFICULTY = "extraDifficulty";
     public static final String EXTRA_CATEGORY_ID = "extraCategoryId";
     public static final String EXTRA_CATEGORY_NAME = "extraCategoryName";
-/*----------------------------------UI Declaration------------------------------------------------*/
+    //UI components declaration
     private Spinner spinnerDifficulty;
     private Spinner spinnerCategory;
     private Button btnStartQuiz;
-/*---------------------------------AdView Declaration---------------------------------------------*/
+    //AdView declaration
     private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*------------------------------Code for Category Selector----------------------------------------*/
+        //Initialising Variables
         spinnerCategory = findViewById(R.id.spinner_category);
-        loadCategories();
-/*--------------------------------Code for Sets Selector------------------------------------------*/
         spinnerDifficulty = findViewById(R.id.spinner_difficulty);
-        loadDifficultyLevels();
-/*------------------------------Code for Showing Banner Ad----------------------------------------*/
         mAdView = findViewById(R.id.adViewBanner);
-        showBannerAd();
-/*----------------------------------Code for Start Quiz-------------------------------------------*/
         btnStartQuiz = findViewById(R.id.btn_start_quiz);
+
+        loadCategories();
+        loadDifficultyLevels();
+        showBannerAd();
+
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -130,29 +130,28 @@ public class MainActivity extends AppCompatActivity {
     }
 /*---------------------------------Method for Showing Banner Ad-----------------------------------*/
     private void showBannerAd() {
-        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(new AdRequest.Builder().build());
         mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
             }
             @Override
             public void onAdClosed() {
-                Toast.makeText(getApplicationContext(), "Ad is closed!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Ad is closed!", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                Toast.makeText(getApplicationContext(), "Ad failed to load! error code: " + errorCode, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Ad failed to load! error code: " + errorCode, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onAdLeftApplication() {
-                Toast.makeText(getApplicationContext(), "Ad left application!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Ad left application!", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onAdOpened() {
                 super.onAdOpened();
             }
         });
-        mAdView.loadAd(adRequest);
     }
 /*------------------------------Method for Back Press Button--------------------------------------*/
     @Override

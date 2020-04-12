@@ -81,7 +81,6 @@
         android:text=" Start Quiz "
         android:elevation="10dp"
         android:translationZ="10dp"
-        android:background="@drawable/startquiz_corners"
         android:textColor="@color/colorLight"/>
 
     <com.google.android.gms.ads.AdView
