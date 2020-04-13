@@ -37,7 +37,7 @@ import java.util.Locale;
 public class QuizActivity extends AppCompatActivity {
 /*------------------------------Variables Declaration---------------------------------------------*/
     // Test time Constant in MilliSeconds
-    private static final long COUNTDOWN_IN_MILLIS = (45*60*1000);
+    private static final long COUNTDOWN_IN_MILLIS = (60*60*1000);
     // Constant KeyValues
     private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
     private static final String KEY_MILLIS_LEFT = "keyMillisLeft";

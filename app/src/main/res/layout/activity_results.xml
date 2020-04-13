@@ -5,21 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorLight"
-    android:translationZ="0dp"
-    android:elevation="0dp"
     tools:context=".ResultsActivity">
 
     <LinearLayout
         android:id="@+id/gif_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rbgroup_border"
         android:orientation="vertical"
-        android:layout_centerInParent="true">
+        android:elevation="10dp">
 
         <pl.droidsonroids.gif.GifImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="128dp"
             android:src="@drawable/loading" />
     </LinearLayout>
 
@@ -82,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text=" 00.0 "
+            android:text=" "
             android:elevation="10dp"
             android:textColor="@color/colorPrimaryDark"
             android:background="@color/colorLight"
@@ -98,7 +97,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text=" 00.0% "
+            android:text=" "
             android:elevation="10dp"
             android:textColor="@color/colorPrimaryDark"
             android:background="@color/colorLight"

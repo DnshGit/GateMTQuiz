@@ -147,14 +147,14 @@
                 android:id="@+id/textview_question_num"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:freezesText="true"
                 android:text="Question"
-                android:gravity="left"
+                android:gravity="center_vertical"
                 android:paddingLeft="4dp"
-                android:layout_gravity="center_vertical"
                 android:textStyle="bold"
-                android:textColor="@color/colorLight" />
+                android:textColor="@android:color/black"
+                android:background="@color/colorLight"/>
 
             <TextView
                 android:id="@+id/textview_section"
@@ -189,6 +189,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingRight="4dp"
+            android:elevation="5dp"
+            android:layout_marginTop="2dp"
             android:layout_below="@+id/layout_header"
             android:layout_above="@+id/radio_group_layout">
 

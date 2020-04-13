@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,9 +32,9 @@ public class ResultsActivity extends AppCompatActivity {
     private ListView resultsListView;
     ArrayList<ResultListItem> resultList;
 
-    private RewardedVideoAd mRewardedVideoAd;
-
     private double score=0.0;
+
+    private RewardedVideoAd mRewardedVideoAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +49,70 @@ public class ResultsActivity extends AppCompatActivity {
         resultsListView = findViewById(R.id.list_results);
         btnShowSolutions = findViewById(R.id.btn_show_solutions);
 
-        gifLayout.setVisibility(View.VISIBLE);
-        btnShowSolutions.setEnabled(false);
-
         resultList = this.getIntent().getExtras().getParcelableArrayList(QuizActivity.EXTRA_RESULT_LIST);
 
-        showVideoAd();
+        prepResults();
+
+        if (savedInstanceState == null) {
+            hideResults();
+            showVideoAdWithResult();
+        }else {
+            showResults();
+        }
     }
 
-    private void showResults() {
-        gifLayout.setVisibility(View.GONE);
+    private void showVideoAdWithResult() {
+        // Test ad Id "ca-app-pub-3940256099942544/5224354917"
+        mRewardedVideoAd.loadAd(getString(R.string.rewarded_video),
+                new AdRequest.Builder().build());
+
+        mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+            @Override
+            public void onRewardedVideoAdLoaded() {
+                if (mRewardedVideoAd.isLoaded()) {
+                    mRewardedVideoAd.show();
+                    showResults();
+                }
+            }
+
+            @Override
+            public void onRewardedVideoAdOpened() {
+
+            }
+
+            @Override
+            public void onRewardedVideoStarted() {
+
+            }
+
+            @Override
+            public void onRewardedVideoAdClosed() {
+
+            }
+
+            @Override
+            public void onRewarded(RewardItem rewardItem) {
+
+            }
+
+            @Override
+            public void onRewardedVideoAdLeftApplication() {
+
+            }
+
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int i) {
+                showResults();
+            }
+
+            @Override
+            public void onRewardedVideoCompleted() {
+
+            }
+        });
+    }
+
+    private void prepResults() {
         int i, totalAnswered=0, totalCorrect=0;
         double accuracy=0.0;
         for (i=0;i<resultList.size();i++) {
@@ -81,7 +136,6 @@ public class ResultsActivity extends AppCompatActivity {
         ResultListAdapter adapter = new ResultListAdapter(this, R.layout.list_item, resultList);
         resultsListView.setAdapter(adapter);
 
-        btnShowSolutions.setEnabled(true);
         btnShowSolutions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,46 +145,12 @@ public class ResultsActivity extends AppCompatActivity {
         });
     }
 
-    private void showVideoAd() {
-        // Real AdUnitId mRewardedVideoAd.loadAd(getString(R.string.rewarded_video)
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder()
-                            .build());
-        // make sure the ad is loaded completely before showing it
-        if (mRewardedVideoAd.isLoaded()) {
-            mRewardedVideoAd.show();
-        }
-        // setting listener on Ad
-        mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
-            @Override
-            public void onRewarded(RewardItem rewardItem) {
-                Toast.makeText(ResultsActivity.this, "onRewarded! currency: " + rewardItem.getType() + "  amount: " +
-                        rewardItem.getAmount(), Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onRewardedVideoAdLeftApplication() {
-                Toast.makeText(ResultsActivity.this, "onRewardedVideoAdLeftApplication",
-                        Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onRewardedVideoAdClosed() {
-            }
-            @Override
-            public void onRewardedVideoAdFailedToLoad(int errorCode) {
-                showResults();
-            }
-            @Override
-            public void onRewardedVideoAdLoaded() {
-                showResults();
-                Toast.makeText(ResultsActivity.this, "Please Watch Video To Continue", Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onRewardedVideoAdOpened() {
+    private void showResults() {
+        gifLayout.setVisibility(View.GONE);
+    }
 
-            }
-            @Override
-            public void onRewardedVideoStarted() {
-            }
-        });
+    private void hideResults() {
+        gifLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

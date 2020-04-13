@@ -4,16 +4,20 @@
     package="com.example.gatemtquiz3">
 
     <application
-        android:name=".AdMobApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="GateMT Quiz 0.4"
+        android:label="GateMT Quiz 0.5"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:label">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id"/>
         <activity android:name=".SolutionsActivity2" />
-        <activity android:name=".ResultsActivity" />
+        <activity android:name=".ResultsActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".QuizActivity"
             android:screenOrientation="landscape"

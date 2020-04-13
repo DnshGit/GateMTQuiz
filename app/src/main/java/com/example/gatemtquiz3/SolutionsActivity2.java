@@ -33,7 +33,10 @@ public class SolutionsActivity2 extends AppCompatActivity implements OnPageChang
         setContentView(R.layout.activity_solutions2);
 
         mInterstitialAd = new InterstitialAd(this);
-        showInterScreenAd();
+
+        if (savedInstanceState == null) {
+            showInterScreenAd();
+        }
         pdfView= (PDFView)findViewById(R.id.pdfView);
         displayFromAsset(SAMPLE_FILE);
 
@@ -78,8 +81,8 @@ public class SolutionsActivity2 extends AppCompatActivity implements OnPageChang
     }
 
     private void showInterScreenAd() {
-        //Real AdUnitId mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+        //Test add Id mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         // Load ads into Interstitial Ads
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         // setting listener for Ad

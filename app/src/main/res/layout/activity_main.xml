@@ -90,8 +90,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-        <!--Real AdUnitID ads:adUnitId="@string/banner_home_footer"-->
+        ads:adUnitId="@string/banner_home_footer">
+        <!--Test AdUnitID "ca-app-pub-3940256099942544/6300978111"-->
     </com.google.android.gms.ads.AdView>
 
 
