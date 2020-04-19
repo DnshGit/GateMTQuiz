@@ -5,7 +5,7 @@
     tools:context=".CalculatorActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLight">
+    android:background="#d3d3d3">
 
     <LinearLayout
         android:id="@+id/calc_header"
@@ -28,39 +28,41 @@
         <Button
             android:id="@+id/close_calc_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text=" X "
-            android:textSize="12dp"
-            android:textAllCaps="false"
+            android:layout_height="match_parent"
             android:layout_margin="0dp"
-            android:layout_height="match_parent"/>
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_light"
+            android:text=" X "
+            android:textAllCaps="false"
+            android:textSize="12dp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/scientific_tv_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/calc_header">
+        android:layout_below="@+id/calc_header"
+        android:layout_marginBottom="2dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/scientific_tv_upper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
+            android:background="@drawable/rbgroup_border"
             android:gravity="right"
             android:textColor="@android:color/black"
-            android:background="@drawable/rbgroup_border"/>
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/scientific_tv_lower"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rbgroup_border"
-            android:textColor="@android:color/black"
-            android:textSize="24dp"
             android:gravity="right"
-            android:paddingRight="4dp"/>
+            android:paddingRight="4dp"
+            android:textColor="@android:color/black"
+            android:textSize="24dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -91,8 +93,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="Mod"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorLight" />
 
                 <RadioGroup
                     android:id="@+id/angles_radiogroup"
@@ -178,68 +182,85 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="sinh"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorLight" />
 
                 <Button
                     android:id="@+id/scientific_btn_cosh"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="cosh"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorLight" />
 
                 <Button
                     android:id="@+id/scientific_btn_tanh"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="tanh"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorLight" />
 
                 <Button
                     android:id="@+id/scientific_btn_exp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="Exp"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorLight" />
 
                 <Button
                     android:id="@+id/scientific_btn_parent_open"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="(" />
+                    android:background="@drawable/calc_btn_bg"
+                    android:text="("
+                    android:textColor="@color/colorLight" />
 
                 <Button
                     android:id="@+id/scientific_btn_parent_close"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=")" />
+                    android:background="@drawable/calc_btn_bg"
+                    android:text=")"
+                    android:textColor="@color/colorLight" />
 
                 <Button
                     android:id="@+id/scientific_btn_bs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="←" />
+                    android:background="@drawable/calc_btn_bg"
+                    android:text="←"
+                    android:textColor="@color/colorLight" />
 
                 <Button
                     android:id="@+id/scientific_btn_c"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/bg_red"
                     android:text="C"
-                    android:background="@drawable/bg_red"/>
+                    android:textColor="@color/colorLight" />
 
                 <Button
                     android:id="@+id/scientific_btn_negate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="+/-" />
+                    android:background="@drawable/calc_btn_bg"
+                    android:text="+/-"
+                    android:textColor="@color/colorLight" />
             </LinearLayout>
 
             <LinearLayout
@@ -255,6 +276,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/sinh_1"
                     android:textAllCaps="false" />
 
@@ -263,6 +285,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/cosh_1"
                     android:textAllCaps="false" />
 
@@ -271,6 +294,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/tanh_1"
                     android:textAllCaps="false" />
 
@@ -279,6 +303,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/log_base2_x"
                     android:textAllCaps="false" />
 
@@ -287,6 +312,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="ln"
                     android:textAllCaps="false" />
 
@@ -295,6 +321,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="log"
                     android:textAllCaps="false" />
 
@@ -303,6 +330,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="7"
                     android:textAllCaps="false" />
 
@@ -311,6 +339,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="8"
                     android:textAllCaps="false" />
 
@@ -319,6 +348,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="9"
                     android:textAllCaps="false" />
 
@@ -327,6 +357,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="/" />
             </LinearLayout>
 
@@ -343,6 +374,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="π" />
 
                 <Button
@@ -350,6 +382,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="e"
                     android:textAllCaps="false" />
 
@@ -358,6 +391,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="n!" />
 
                 <Button
@@ -365,6 +399,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/log_basey_x"
                     android:textAllCaps="false" />
 
@@ -373,6 +408,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/e_pow_x"
                     android:textAllCaps="false" />
 
@@ -381,6 +417,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/ten_pow_x"
                     android:textAllCaps="false" />
 
@@ -389,6 +426,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="4" />
 
                 <Button
@@ -396,6 +434,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="5" />
 
                 <Button
@@ -403,6 +442,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="6" />
 
                 <Button
@@ -410,6 +450,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="*"
                     android:textAllCaps="false" />
             </LinearLayout>
@@ -427,6 +468,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="sin"
                     android:textAllCaps="false" />
 
@@ -435,6 +477,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="cos"
                     android:textAllCaps="false" />
 
@@ -443,6 +486,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="tan"
                     android:textAllCaps="false" />
 
@@ -451,6 +495,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/x_pow_y"
                     android:textAllCaps="false" />
 
@@ -459,6 +504,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/x_pow_2"
                     android:textAllCaps="false" />
 
@@ -467,6 +513,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/x_pow_3"
                     android:textAllCaps="false" />
 
@@ -475,6 +522,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="1" />
 
                 <Button
@@ -482,6 +530,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="2" />
 
                 <Button
@@ -489,6 +538,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="3" />
 
                 <Button
@@ -496,6 +546,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="-" />
             </LinearLayout>
 
@@ -512,6 +563,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="sin-1"
                     android:textAllCaps="false" />
 
@@ -520,6 +572,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="cos-1"
                     android:textAllCaps="false" />
 
@@ -528,6 +581,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="tan-1"
                     android:textAllCaps="false" />
 
@@ -536,6 +590,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/y_root_x"
                     android:textAllCaps="false" />
 
@@ -544,6 +599,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="@string/cube_root_x" />
 
                 <Button
@@ -551,6 +607,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="|x|" />
 
                 <Button
@@ -558,6 +615,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="0" />
 
                 <Button
@@ -565,6 +623,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="." />
 
                 <Button
@@ -572,6 +631,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/calc_btn_bg"
                     android:text="+" />
 
             </LinearLayout>
@@ -597,6 +657,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:background="@drawable/calc_btn_bg"
                 android:text="√" />
 
             <Button
@@ -604,13 +665,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="%"/>
+                android:background="@drawable/calc_btn_bg"
+                android:text="%" />
 
             <Button
                 android:id="@+id/scientific_btn_1_div_x"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:background="@drawable/calc_btn_bg"
                 android:text="1/x"
                 android:textAllCaps="false" />
 
