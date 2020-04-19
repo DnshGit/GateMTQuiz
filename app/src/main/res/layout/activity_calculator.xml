@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CalculatorActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLight">
+
+    <LinearLayout
+        android:id="@+id/calc_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:weightSum="11"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:text="Scientific Calculator"
+            android:textColor="@color/colorLight"
+            android:fontFamily="serif"
+            android:textSize="24dp" />
+
+        <Button
+            android:id="@+id/close_calc_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text=" X "
+            android:textSize="12dp"
+            android:textAllCaps="false"
+            android:layout_margin="0dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/scientific_tv_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/calc_header">
+
+        <TextView
+            android:id="@+id/scientific_tv_upper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:gravity="right"
+            android:textColor="@android:color/black"
+            android:background="@drawable/rbgroup_border"/>
+
+        <TextView
+            android:id="@+id/scientific_tv_lower"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rbgroup_border"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:gravity="right"
+            android:paddingRight="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/scientific_calculator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="11"
+        android:layout_below="@+id/scientific_tv_layout">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="6">
+
+            <LinearLayout
+                android:id="@+id/row1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/scientific_btn_mod"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Mod"
+                    android:textAllCaps="false" />
+
+                <RadioGroup
+                    android:id="@+id/angles_radiogroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_gravity="center_vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_deg"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Deg"
+                        android:textColor="@android:color/black"
+                        android:buttonTint="@android:color/black"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_rag"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Rad"
+                        android:textColor="@android:color/black"
+                        android:buttonTint="@android:color/black"/>
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/scientific_btn_ce"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="CE"
+                    android:background="@drawable/bg_blue"/>
+
+                <TextView
+                    android:id="@+id/scientific_btn_angle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MC"
+                    android:enabled="false"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MR"
+                    android:enabled="false"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MS"
+                    android:enabled="false"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="M+"
+                    android:enabled="false"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/scientific_btn_sinh"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="sinh"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_cosh"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="cosh"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_tanh"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="tanh"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_exp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Exp"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_parent_open"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="(" />
+
+                <Button
+                    android:id="@+id/scientific_btn_parent_close"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=")" />
+
+                <Button
+                    android:id="@+id/scientific_btn_bs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="←" />
+
+                <Button
+                    android:id="@+id/scientific_btn_c"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="C"
+                    android:background="@drawable/bg_red"/>
+
+                <Button
+                    android:id="@+id/scientific_btn_negate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+/-" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/scientific_btn_sinh_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/sinh_1"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_cosh_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cosh_1"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_tanh_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tanh_1"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/logxbase2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/log_base2_x"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_ln"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ln"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_log"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="log"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="7"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="8"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="9"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_div"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="/" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/scientific_btn_pi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="π" />
+
+                <Button
+                    android:id="@+id/scientific_btn_e"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="e"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_fact"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="n!" />
+
+                <Button
+                    android:id="@+id/scientific_btn_logxbasey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/log_basey_x"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_e_raisedto_x"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/e_pow_x"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_10_raisedto_x"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/ten_pow_x"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="4" />
+
+                <Button
+                    android:id="@+id/scientific_btn_5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5" />
+
+                <Button
+                    android:id="@+id/scientific_btn_6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="6" />
+
+                <Button
+                    android:id="@+id/scientific_btn_mul"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="*"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/scientific_btn_sin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="sin"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_cos"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="cos"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_tan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="tan"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_indice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/x_pow_y"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_sq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/x_pow_2"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_cb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/x_pow_3"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+
+                <Button
+                    android:id="@+id/scientific_btn_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2" />
+
+                <Button
+                    android:id="@+id/scientific_btn_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3" />
+
+                <Button
+                    android:id="@+id/scientific_btn_sub"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="-" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/scientific_btn_sin_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="sin-1"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_cos_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="cos-1"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_tan_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="tan-1"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_y_rt_x"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/y_root_x"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/scientific_btn_cbrt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cube_root_x" />
+
+                <Button
+                    android:id="@+id/scientific_btn_abs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="|x|" />
+
+                <Button
+                    android:id="@+id/scientific_btn_0"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/scientific_btn_decimal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="." />
+
+                <Button
+                    android:id="@+id/scientific_btn_add"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="6">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:text="M-"
+                android:enabled="false"/>
+
+            <Button
+                android:id="@+id/scientific_btn_sqrt"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="√" />
+
+            <Button
+                android:id="@+id/scientific_btn_percentile"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="%"/>
+
+            <Button
+                android:id="@+id/scientific_btn_1_div_x"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="1/x"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/scientific_btn_equal"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="="
+                android:background="@drawable/bg_green"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

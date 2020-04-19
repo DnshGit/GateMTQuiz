@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Instructions"
+            android:textColor="@color/colorLight"
             android:fontFamily="serif"
             android:textStyle="bold"
             android:textSize="20dp"
@@ -296,11 +297,20 @@
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:padding="0dp"
+            android:weightSum="4"
             android:layout_alignParentBottom="true">
 
             <Button
+                android:id="@+id/btn_calc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                android:layout_weight="1"
+                android:text="Calculator" />
+
+            <Button
                 android:id="@+id/btn_review"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:freezesText="true"
                 android:layout_weight="1"
@@ -308,7 +318,7 @@
 
             <Button
                 android:id="@+id/btn_end_quiz"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:freezesText="true"
                 android:layout_weight="1"
@@ -316,7 +326,7 @@
 
             <Button
                 android:id="@+id/btn_next"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:freezesText="true"
                 android:layout_weight="1"

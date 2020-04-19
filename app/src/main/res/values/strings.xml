@@ -5,4 +5,20 @@
     <string name="interstitial_full_screen">ca-app-pub-7461521527672002/2626418053</string>
     <string name="rewarded_video">ca-app-pub-7461521527672002/1257496068</string>
     <string name="realme_testAd_Id">50A82A8B7D73D14DD6A93468B96CCEAE</string>
+
+    <string name="sinh_1">sinh<sup><small>-1</small></sup></string>
+    <string name="sin_1">sin<sup><small>-1</small></sup></string>
+    <string name="cosh_1">cos<small>h</small><sup><small>-1</small></sup></string>
+    <string name="cos_1">cos<sup><small>-1</small></sup></string>
+    <string name="tanh_1">tanh<sup><small>-1</small></sup></string>
+    <string name="tan_1">tan<sup><small>-1</small></sup></string>
+    <string name="e_pow_x">e<sup><small>X</small></sup></string>
+    <string name="ten_pow_x">10<sup><small>X</small></sup></string>
+    <string name="x_pow_y">X<sup><small>y</small></sup></string>
+    <string name="x_pow_2">X<sup><small>2</small></sup></string>
+    <string name="x_pow_3">X<sup><small>3</small></sup></string>
+    <string name="y_root_x"><sup><small>y</small></sup>√X</string>
+    <string name="cube_root_x"><sup><small>3</small></sup>√X</string>
+    <string name="log_base2_x">log<sub><small>2</small></sub>X</string>
+    <string name="log_basey_x">log<sub><small>y</small></sub>X</string>
 </resources>

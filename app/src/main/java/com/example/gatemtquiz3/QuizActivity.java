@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button btnEndQuiz;
     private Button btnNext;
     private Button btnQuestionsGrid;
+    private Button btnCalc;
     // Questions grid UI components
     private Button btnCloseGrid;
     private GridView questionsGridView;
@@ -107,6 +109,7 @@ public class QuizActivity extends AppCompatActivity {
         btnReview = findViewById(R.id.btn_review);
         btnEndQuiz = findViewById(R.id.btn_end_quiz);
         btnNext = findViewById(R.id.btn_next);
+        btnCalc = findViewById(R.id.btn_calc);
         btnCloseGrid = findViewById(R.id.button_close_grid);
         questionsGridView = findViewById(R.id.questions_gridview);
         questionsGridLayout = findViewById(R.id.questions_grid_layout);
@@ -181,6 +184,13 @@ public class QuizActivity extends AppCompatActivity {
                 checkAnswer();
                 questionCounter++;
                 showQuestion();
+            }
+        });
+
+        btnCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QuizActivity.this, CalculatorActivity.class));
             }
         });
 
