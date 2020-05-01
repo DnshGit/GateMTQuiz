@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -53,9 +54,30 @@ public class MainActivity extends AppCompatActivity {
         showBannerAd();
 
         loadSections();
-        sectionName = spinnerSections.getSelectedItem().toString();
-        loadSubSections();
-        subSectionName = spinnerSubsections.getSelectedItem().toString();
+        //sectionName=spinnerSections.getSelectedItem().toString();
+        spinnerSections.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sectionName = parent.getItemAtPosition(position).toString();
+                loadSubSections();
+                spinnerSubsections.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        subSectionName = parent.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        subSectionName = parent.getItemAtPosition(0).toString();
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                sectionName = parent.getItemAtPosition(0).toString();
+            }
+        });
 
         btnStartQuiz.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -657,9 +658,13 @@ public class CalculatorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<String> expression = calculations.numbers;
-                calculations.evaluateAnswer();
-                lowertv.setText(calculations.answer);
-                uppertv.setText("");
+                try {
+                    calculations.evaluateAnswer();
+                    lowertv.setText(calculations.answer);
+                    uppertv.setText("");
+                }catch (Exception e){
+                    Toast.makeText(CalculatorActivity.this, "Invalid operation", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
