@@ -1,7 +1,6 @@
-package com.example.gatemtquiz3;
+package com.sidmobileapps.gatequizenggmaths;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 

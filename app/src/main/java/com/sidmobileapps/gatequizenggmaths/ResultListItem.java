@@ -1,4 +1,4 @@
-package com.example.gatemtquiz3;
+package com.sidmobileapps.gatequizenggmaths;
 
 import android.os.Parcel;
 import android.os.Parcelable;

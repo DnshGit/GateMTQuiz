@@ -1,4 +1,4 @@
-package com.example.gatemtquiz3;
+package com.sidmobileapps.gatequizenggmaths;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.gatemtquiz3", appContext.getPackageName());
+        assertEquals("com.sidmobileapps.gatemtquiz3", appContext.getPackageName());
     }
 }

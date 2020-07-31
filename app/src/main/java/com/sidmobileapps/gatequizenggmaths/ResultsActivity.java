@@ -1,13 +1,10 @@
-package com.example.gatemtquiz3;
+package com.sidmobileapps.gatequizenggmaths;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -102,6 +99,7 @@ public class ResultsActivity extends AppCompatActivity {
 
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
+                Toast.makeText(ResultsActivity.this, "Failed to Load Ad", Toast.LENGTH_SHORT).show();
                 showResults();
             }
 
@@ -140,7 +138,7 @@ public class ResultsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(ResultsActivity.this, SolutionsActivity2.class));
+                startActivity(new Intent(ResultsActivity.this, InterstitialAdActivity.class));
             }
         });
     }

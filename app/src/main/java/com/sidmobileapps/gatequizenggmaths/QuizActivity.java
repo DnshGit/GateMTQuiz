@@ -1,4 +1,4 @@
-package com.example.gatemtquiz3;
+package com.sidmobileapps.gatequizenggmaths;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -7,24 +7,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -32,13 +28,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Locale;
 
 public class QuizActivity extends AppCompatActivity {
 /*------------------------------Variables Declaration---------------------------------------------*/
     // Test time Constant in MilliSeconds
-    private static final long COUNTDOWN_IN_MILLIS = (60*60*1000);
+    private static final long COUNTDOWN_IN_MILLIS = (45*60*1000);
     // Constant KeyValues
     private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
     private static final String KEY_MILLIS_LEFT = "keyMillisLeft";
@@ -90,11 +85,23 @@ public class QuizActivity extends AppCompatActivity {
     private ArrayList<ResultListItem> resultList;
     private ArrayList<QuestionGridItem> answerStatusColorList;
 
+    private WebView webview2;
+    private Button btnBackCalc;
+    private RelativeLayout calcLayout;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+        calcLayout = findViewById(R.id.calc_layout);
+        btnBackCalc = findViewById(R.id.btn_back_calc);
+        webview2 = findViewById(R.id.webview2);
+        webview2.setWebViewClient(new WebViewClient());
+        webview2.getSettings().setJavaScriptEnabled(true);
+        webview2.getSettings().setDomStorageEnabled(true);
+        webview2.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
+        webview2.loadUrl("https://www.tcsion.com/OnlineAssessment/ScientificCalculator/Calculator.html#nogo");
         //Initialisation
         textViewSection = findViewById(R.id.textview_section);
         textViewClock = findViewById(R.id.textview_clock);
@@ -182,15 +189,24 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer();
-                questionCounter++;
-                showQuestion();
+                if (questionCounter<questionCountTotal){
+                    questionCounter++;
+                    showQuestion();
+                }
             }
         });
 
         btnCalc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuizActivity.this, CalculatorActivity.class));
+                calcLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnBackCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calcLayout.setVisibility(View.GONE);
             }
         });
 
@@ -264,10 +280,13 @@ public class QuizActivity extends AppCompatActivity {
             toastCenter("This is Last Question. Click End Quiz to get Result");
             // Disabling review button after last question
             btnReview.setEnabled(false);
+            btnNext.setEnabled(false);
         }
         // Disabling Next button for last question
         if (questionCounter==questionCountTotal-1){
-            btnNext.setEnabled(false);
+            btnNext.setText("SAVE");
+        }else {
+            btnNext.setText("SAVE & NEXT");
         }
     }
 /*---------------------------------Method for Checking and Saving Answer--------------------------*/
@@ -362,7 +381,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 /*------------------------------------Method to Finish Quiz Activity------------------------------*/
     private void finishQuiz() {
-        checkAnswer();
         countDownTimer.cancel();
         // Passing Array Lists to Results Activity
         Intent resultIntent = new Intent(QuizActivity.this, ResultsActivity.class);

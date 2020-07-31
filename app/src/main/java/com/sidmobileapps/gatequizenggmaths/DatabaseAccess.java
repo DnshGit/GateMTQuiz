@@ -1,11 +1,11 @@
-package com.example.gatemtquiz3;
+package com.sidmobileapps.gatequizenggmaths;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.gatemtquiz3.QuizContract.*;
+import com.sidmobileapps.gatequizenggmaths.QuizContract.*;
 
 import java.util.ArrayList;
 import java.util.List;

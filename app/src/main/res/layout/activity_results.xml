@@ -17,9 +17,17 @@
 
         <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="128dp"
             android:src="@drawable/loading" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loading Results..."
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:gravity="center_horizontal"/>
     </LinearLayout>
 
     <TextView

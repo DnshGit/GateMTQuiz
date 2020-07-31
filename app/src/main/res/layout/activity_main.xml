@@ -16,20 +16,25 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="GATE MT Quiz"
+        android:text="GATE Quiz"
         android:fontFamily="serif"
         android:textStyle="bold"
         android:textColor="@color/colorLight"
         android:textSize="32dp" />
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Select topic and click Start Quiz."
+        android:textSize="20dp"
+        android:textColor="@color/colorLight"
+        android:textStyle="bold"
+        android:fontFamily="serif"
         android:padding="32dp"
         android:layout_below="@+id/textview_caption"
         android:layout_above="@+id/category_layout"
-        android:src="@drawable/main_logo"
         android:minHeight="16dp"
         android:minWidth="16dp"
         android:maxHeight="200dp"
@@ -79,6 +84,19 @@
         android:layout_below="@+id/difficulty_layout"
         android:layout_centerHorizontal="true"
         android:text=" Start Quiz "
+        android:elevation="10dp"
+        android:translationZ="10dp"
+        android:textColor="@color/colorLight"/>
+
+    <Button
+        android:id="@+id/btn_calc_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="16dp"
+        android:layout_below="@+id/btn_start_quiz"
+        android:layout_centerHorizontal="true"
+        android:text=" Start Calculator "
         android:elevation="10dp"
         android:translationZ="10dp"
         android:textColor="@color/colorLight"/>

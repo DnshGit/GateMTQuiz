@@ -9,6 +9,30 @@
     android:layout_margin="0dp">
 
     <RelativeLayout
+        android:id="@+id/calc_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLight"
+        android:elevation="50dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_back_calc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:text=" Back "
+            android:textColor="@color/colorLight"
+            android:elevation="20dp"/>
+
+        <WebView
+            android:id="@+id/webview2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/instructions_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

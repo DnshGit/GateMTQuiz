@@ -1,6 +1,5 @@
-package com.example.gatemtquiz3;
+package com.sidmobileapps.gatequizenggmaths;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,20 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import java.util.List;
@@ -38,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerSubsections;
     private Spinner spinnerSections;
     private Button btnStartQuiz;
+    private Button btnStartCalc;
     //AdView declaration
     private AdView mAdView;
 
@@ -50,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerSubsections = findViewById(R.id.spinner_sub_section);
         mAdView = findViewById(R.id.adViewBanner);
         btnStartQuiz = findViewById(R.id.btn_start_quiz);
+        btnStartCalc = findViewById(R.id.btn_calc_link);
 
         showBannerAd();
 
@@ -86,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
                 btnStartQuiz.setScaleX((float) 0.9);
                 btnStartQuiz.setScaleY((float) 0.9);
                 startQuiz();
+            }
+        });
+
+        btnStartCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, WebCalculator.class));
             }
         });
     }
