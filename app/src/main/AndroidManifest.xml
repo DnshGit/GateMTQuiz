@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.sidmobileapps.gatequizenggmaths">
+    package="com.sidmobileapps.gatequiz2">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Gate Quiz Engg Maths"
+        android:label="Gate Quiz"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:label">
-        <activity android:name=".InterstitialAdActivity"></activity>
+        <activity android:name="com.sidmobileapps.gatequiz2.InterstitialAd2"></activity>
+        <activity android:name="com.sidmobileapps.gatequiz2.InterstitialAdActivity" />
         <activity
-            android:name=".WebCalculator"
+            android:name="com.sidmobileapps.gatequiz2.WebCalculator"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity" />
 
@@ -23,17 +24,17 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />
 
-        <activity android:name=".SolutionsActivity2" />
+        <activity android:name="com.sidmobileapps.gatequiz2.SolutionsActivity2" />
         <activity
-            android:name=".ResultsActivity"
+            android:name="com.sidmobileapps.gatequiz2.ResultsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".QuizActivity"
+            android:name="com.sidmobileapps.gatequiz2.QuizActivity"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.sidmobileapps.gatequiz2.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

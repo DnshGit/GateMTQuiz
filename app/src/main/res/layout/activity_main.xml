@@ -15,91 +15,116 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
         android:text="GATE Quiz"
         android:fontFamily="serif"
         android:textStyle="bold"
         android:textColor="@color/colorLight"
-        android:textSize="32dp" />
+        android:textSize="48dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="Select topic and click Start Quiz."
-        android:textSize="20dp"
-        android:textColor="@color/colorLight"
-        android:textStyle="bold"
-        android:fontFamily="serif"
-        android:padding="32dp"
+    <ImageView
+        android:id="@+id/home_icon"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/home_icon"
         android:layout_below="@+id/textview_caption"
-        android:layout_above="@+id/category_layout"
-        android:minHeight="16dp"
-        android:minWidth="16dp"
-        android:maxHeight="200dp"
-        android:maxWidth="200dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
 
     <LinearLayout
         android:id="@+id/category_layout"
-        android:layout_width="wrap_content"
+        android:layout_below="@+id/home_icon"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/border_dark">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Subject below :"
+            android:fontFamily="serif"
+            android:textSize="16dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/colorLight"
+            android:gravity="center_horizontal"/>
 
         <Spinner
             android:id="@+id/spinner_section"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"/>
+            android:paddingLeft="32dp"
+            android:popupBackground="@color/colorDark"
+            android:background="@drawable/bg_spinner"
+            android:gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/difficulty_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_below="@+id/category_layout"
+        android:orientation="vertical"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/border_dark">
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Topic below :"
+            android:fontFamily="serif"
+            android:textSize="16dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/colorLight"
+            android:gravity="center_horizontal"/>
 
         <Spinner
             android:id="@+id/spinner_sub_section"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="2dp"
+            android:paddingLeft="32dp"
+            android:popupBackground="@color/colorDark"
+            android:background="@drawable/bg_spinner"
             android:layout_marginBottom="2dp"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_start_quiz"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:padding="16dp"
+        android:orientation="horizontal"
         android:layout_below="@+id/difficulty_layout"
-        android:layout_centerHorizontal="true"
-        android:text=" Start Quiz "
-        android:elevation="10dp"
-        android:translationZ="10dp"
-        android:textColor="@color/colorLight"/>
+        android:layout_marginTop="48dp"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/btn_calc_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:padding="16dp"
-        android:layout_below="@+id/btn_start_quiz"
-        android:layout_centerHorizontal="true"
-        android:text=" Start Calculator "
-        android:elevation="10dp"
-        android:translationZ="10dp"
-        android:textColor="@color/colorLight"/>
+        <Button
+            android:id="@+id/btn_start_quiz"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="16dp"
+            android:text=" Start Quiz "
+            android:elevation="10dp"
+            android:translationZ="10dp"
+            android:textColor="@color/colorLight"/>
+
+        <Button
+            android:id="@+id/btn_calc_link"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="24dp"
+            android:padding="16dp"
+            android:layout_below="@+id/btn_start_quiz"
+            android:layout_centerHorizontal="true"
+            android:text=" Calc "
+            android:elevation="10dp"
+            android:translationZ="10dp"
+            android:textColor="@color/colorLight"/>
+    </LinearLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adViewBanner"
