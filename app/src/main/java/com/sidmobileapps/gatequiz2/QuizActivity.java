@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,11 +29,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpResponse;
 
 public class QuizActivity extends AppCompatActivity {
 /*------------------------------Variables Declaration---------------------------------------------*/
@@ -91,6 +102,9 @@ public class QuizActivity extends AppCompatActivity {
     private WebView webview2;
     private Button btnBackCalc;
     private RelativeLayout calcLayout;
+    private String filepath;
+    private File[] files = new File[1];
+    ArrayList imageList = new ArrayList();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -142,8 +156,9 @@ public class QuizActivity extends AppCompatActivity {
             dbHelper.open();
             questionList = dbHelper.getQuestions(sectionName, subSection);
             dbHelper.close();
-            ArrayList imageList = new ArrayList();
-            imageList = this.getIntent().getParcelableArrayListExtra("imgList");
+            //imageList = this.getIntent().getParcelableArrayListExtra("imgList");
+            this.getQuestionsFromApi();
+            Log.d("json", "list in quiz "+imageList);
             //Toast.makeText(this, "img sz "+imageList.size(), Toast.LENGTH_SHORT).show();
             //Initialising Arrays and Lists
             questionCountTotal = questionList.size();
@@ -280,7 +295,29 @@ public class QuizActivity extends AppCompatActivity {
 
             currentQuestion = questionList.get(questionCounter);
             questionImage = currentQuestion.getQuestionImage();
-            imageView.setImageResource(getResources().getIdentifier(questionImage,"drawable", getPackageName()));
+            //imageView.setImageResource(getResources().getIdentifier(questionImage,"drawable", getPackageName()));
+
+            AsyncHttpClient client = new AsyncHttpClient();
+            //client.addHeader("Content-Type", "multipart/form-data");
+            client.get("http://10.0.2.2:8181/api/"+imageList.get(questionCounter).toString(),
+                    new FileAsyncHttpResponseHandler(/* Context */ this) {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, File response) {
+                    files[0] = response;
+                    // called when response HTTP status is "200 OK"
+                    filepath = response.getAbsolutePath();
+                    Log.d("http", "success get file"+response.getAbsolutePath());
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable e, File file) {
+                    // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                    Log.d("http", "failure"+file.getName());
+                }
+            });
+            Bitmap bitmap = BitmapFactory.decodeFile(filepath);
+            imageView.setImageBitmap(bitmap);
         }else {
             toastCenter("This is Last Question. Click End Quiz to get Result");
             // Disabling review button after last question
@@ -362,6 +399,33 @@ public class QuizActivity extends AppCompatActivity {
             textViewClock.setTextColor(Color.BLACK);
         }
     }
+
+    private void getQuestionsFromApi() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        //client.addHeader("Content-Type", "multipart/form-data");
+        client.get("http://10.0.2.2:8181/api/quiz/Aptitude/Aptitude 01", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                if (response != null) {
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            imageList.add(response.getJSONObject(i).getString("questionImage"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Log.d("json", "json response "+ response + " ; " + imageList.size());
+            }
+
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                Log.d("json", "json failure");
+            }
+        });
+    }
 /*---------------------------------Method to Show End Quiz Alert----------------------------------*/
     private void showEndQuizAlert() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -386,6 +450,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 /*------------------------------------Method to Finish Quiz Activity------------------------------*/
     private void finishQuiz() {
+        files[0].deleteOnExit();
+        Log.d("file", "file wit path "+files[0].delete()+" deleted");
         countDownTimer.cancel();
         // Passing Array Lists to Results Activity
         Intent resultIntent = new Intent(QuizActivity.this, ResultsActivity.class);

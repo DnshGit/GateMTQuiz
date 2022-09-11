@@ -34,6 +34,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     ArrayList imageList = new ArrayList();
+    JSONArray questionsJson = new JSONArray();
 
 
     private int REQUEST_CODE = 1;
@@ -84,41 +90,21 @@ public class MainActivity extends AppCompatActivity {
 
         loadSections();
 
-
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        //client.addHeader("Content-Type", "multipart/form-data");
-        client.get("http://localhost:8181/api/siddipet ec.png", new FileAsyncHttpResponseHandler(/* Context */ this) {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, File response) {
-                // called when response HTTP status is "200 OK"
-
-                Log.d("http", "success get file"+response.getAbsolutePath());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e, File file) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                Log.d("http", "failure"+file.getName());
-            }
-        });
-
         //sectionName=spinnerSections.getSelectedItem().toString();
         spinnerSections.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (parent.getItemAtPosition(position).equals("select subject")) {
                     sectionName = "none";
-                }else{
+                } else {
                     sectionName = parent.getItemAtPosition(position).toString();
                     loadSubSections();
                     spinnerSubsections.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (parent.getItemAtPosition(position).equals("select topic")){
+                            if (parent.getItemAtPosition(position).equals("select topic")) {
                                 subSectionName = "none";
-                            }else{
+                            } else {
                                 subSectionName = parent.getItemAtPosition(position).toString();
                             }
                         }
@@ -145,20 +131,27 @@ public class MainActivity extends AppCompatActivity {
                 btnStartQuiz.setScaleY((float) 0.9);
                 if (sectionName == "none" || subSectionName == "none") {
                     Toast.makeText(MainActivity.this, "Subject or Topic not selected", Toast.LENGTH_LONG).show();
-                }else {
-                    storageRef.child("images").listAll()
-                            .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                                @Override
-                                public void onSuccess(ListResult listResult) {
-                                    for (StorageReference item : listResult.getItems()) {
-                                        // All the items under listRef.
-                                        imageList.add(item);
+                } else {
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    //client.addHeader("Content-Type", "multipart/form-data");
+                    client.get("http://10.0.2.2:8181/api/quiz/Aptitude/Aptitude 01", null, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                            if (response != null) {
+                                for (int i = 0; i < response.length(); i++) {
+                                    try {
+                                        imageList.add(response.getJSONObject(i).getString("questionImage"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                    Toast.makeText(MainActivity.this, "imgsz "+imageList.size(), Toast.LENGTH_SHORT).show();
-                                    startQuiz(imageList);
+                                    //imageList.add("apti");
                                 }
-                            });
-
+                                Log.d("json", "json response "+ response + " ; " + imageList.size());
+                                //startQuiz(imageList);
+                            }
+                        }
+                    });
+                    startQuiz(imageList);
                 }
             }
         });
